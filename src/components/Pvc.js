@@ -5,8 +5,6 @@ import material from '../../native-base-theme/variables/material';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, CheckBox, TextInput, BackHandler } from 'react-native'
 import { Actions } from 'react-native-router-flux'
-import Drawer from 'react-native-drawer-menu';
-import DrawerContent from '../DrawerContent'
 import Button from 'react-native-button'
 import RNFB from 'react-native-fetch-blob'
 
@@ -14,7 +12,7 @@ class Manifest extends Component {
     constructor() {
         super()
         this.state = {
-            checked: false
+            
         }
     }
     componentDidMount() {
@@ -42,7 +40,7 @@ class Manifest extends Component {
                     <Container style={styles.container}>
                         <Header style={{ marginTop: (( Dimensions.get('window').height) * 0.024)}}>
                             <Left>
-                                <TouchableOpacity onPress={() => Actions.drawerOpen()} style={styles.touchable} activeOpacity = {0.8}>
+                                <TouchableOpacity onPress={() => Actions.drawerOpen()} activeOpacity = {0.8}>
                                     <Image source={require('../img/icons-02.png')} style={styles.open}/>
                                 </TouchableOpacity>
                             </Left>
@@ -92,8 +90,10 @@ const styles = StyleSheet.create({
         marginTop: '10%'
     },
     img: {
-        marginTop: '5%',
-        marginBottom: '5%',
+        width: 80,
+        height: 80,
+        marginTop: '10%',
+        marginBottom: '10%',
         alignSelf: 'center'
 
     },

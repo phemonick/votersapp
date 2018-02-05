@@ -10,7 +10,9 @@ class Issues extends Component {
     constructor() {
         super()
         this.state = {
-            checked: false
+            checked: false,
+            checked2: false,
+            checked3: false
         }
     }
     componentDidMount() {
@@ -30,6 +32,16 @@ class Issues extends Component {
     changeCheckValue = (value) => {
         this.setState({
             checked: !this.state.checked
+        })
+    }
+    changeCheckValue2 = (value) => {
+        this.setState({
+            checked2: !this.state.checked2
+        })
+    }
+    changeCheckValue3 = (value) => {
+        this.setState({
+            checked3: !this.state.checked3
         })
     }
     render() {
@@ -56,15 +68,15 @@ class Issues extends Component {
                             </Body>
                         </ListItem>
                         <ListItem>
-                            <CheckBox value={this.state.checked} 
-                            onChange={() => this.changeCheckValue()}/>
+                            <CheckBox value={this.state.checked2} 
+                            onChange={() => this.changeCheckValue2()}/>
                             <Body>
                             <Text>Security</Text>
                             </Body>
                         </ListItem>
                         <ListItem>
-                            <CheckBox value={this.state.checked} 
-                            onChange={() => this.changeCheckValue()}/>
+                            <CheckBox value={this.state.checked3} 
+                            onChange={() => this.changeCheckValue3()}/>
                             <Body>
                             <Text>Electricity</Text>
                             </Body>

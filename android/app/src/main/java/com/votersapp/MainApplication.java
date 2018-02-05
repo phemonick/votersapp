@@ -3,7 +3,7 @@ package com.votersapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.filepicker.FilePickerPackage;
+import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
 import com.inprogress.reactnativeyoutube.ReactNativeYouTube;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.facebook.react.ReactNativeHost;
@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
-
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
     public boolean getUseDeveloperSupport() {
@@ -26,7 +25,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new FilePickerPackage(),
+            new ReactNativeDocumentPicker(),
             new ReactNativeYouTube(),
             new RNFetchBlobPackage()
       );

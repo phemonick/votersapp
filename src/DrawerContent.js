@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     width:  (( Dimensions.get('window').height) * 0.018),
     height:  (( Dimensions.get('window').height) * 0.018),
     marginLeft: '92%',
-    marginTop: (( Dimensions.get('window').height) * 0.024)
+    marginTop: (( Dimensions.get('window').height) * 0.03)
     
   },
   logo: {

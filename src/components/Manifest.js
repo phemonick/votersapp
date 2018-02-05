@@ -4,15 +4,15 @@ import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, CheckBox, TextInput, BackHandler } from 'react-native'
 import { Actions } from 'react-native-router-flux'
-import Drawer from 'react-native-drawer-menu';
-import DrawerContent from '../DrawerContent'
 import Button from 'react-native-button'
 
 class Manifest extends Component {
     constructor() {
         super()
         this.state = {
-            checked: false
+            checked: false,
+            checked2: false,
+            checked3: false
         }
     }
     componentDidMount() {
@@ -32,6 +32,16 @@ class Manifest extends Component {
     changeCheckValue = (value) => {
         this.setState({
             checked: !this.state.checked
+        })
+    }
+    changeCheckValue2 = (value) => {
+        this.setState({
+            checked2: !this.state.checked2
+        })
+    }
+    changeCheckValue3 = (value) => {
+        this.setState({
+            checked3: !this.state.checked3
         })
     }
     render() {
@@ -58,15 +68,15 @@ class Manifest extends Component {
                                 </Body>
                             </ListItem>
                             <ListItem>
-                                <CheckBox value={this.state.checked} 
-                                onChange={() => this.changeCheckValue()}/>
+                                <CheckBox value={this.state.checked2} 
+                                onChange={() => this.changeCheckValue2()}/>
                                 <Body>
                                 <Text>Business Financing</Text>
                                 </Body>
                             </ListItem>
                             <ListItem>
-                                <CheckBox value={this.state.checked} 
-                                onChange={() => this.changeCheckValue()}/>
+                                <CheckBox value={this.state.checked3} 
+                                onChange={() => this.changeCheckValue3()}/>
                                 <Body>
                                 <Text>Others</Text>
                                 </Body>

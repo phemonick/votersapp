@@ -115,8 +115,9 @@ const styles = StyleSheet.create({
           alignSelf: 'center'
       },
       img: {
-          marginTop: '3%',
-          width: '55%',
+          marginTop: '6%',
+          width: 80,
+          height: 80,
           resizeMode: 'cover',
           alignSelf: 'center'
 

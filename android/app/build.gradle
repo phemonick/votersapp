@@ -137,7 +137,7 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-file-picker')
+    compile project(':react-native-document-picker')
     compile project(':react-native-youtube')
     compile project(':react-native-fetch-blob')
     compile fileTree(dir: "libs", include: ["*.jar"])
