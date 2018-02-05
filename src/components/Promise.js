@@ -10,14 +10,14 @@ import {
   Platform,
   Image
 } from 'react-native';
-import { StyleProvider, Container, Header, Left, Body, Title, ListItem, Content } from 'native-base'
+import { StyleProvider, Container, Header, Left, Body, Title, Content } from 'native-base'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { Actions } from 'react-native-router-flux'
 import Button from 'react-native-button'
 import YouTube, { YouTubeStandaloneIOS, YouTubeStandaloneAndroid } from 'react-native-youtube';
 
-export default class RCTYouTubeExample extends React.Component {
+export default class Promise extends React.Component {
   state = {
     isReady: false,
     status: null,
@@ -66,7 +66,7 @@ export default class RCTYouTubeExample extends React.Component {
             // it affects the loaded native module
             //videoId="ncw4ISEU5ik"
             // videoIds={['HcXNPI-IPPM', 'XXlZfc1TrD0', 'czcjU1w-c6k', 'uMK0prafzw0']}
-            playlistId="PLF797E961509B4EB5"
+            playlistId="PLMyJSIeLVjyGiMX9priixIz3wX9JQxjbN"
             play={this.state.isPlaying}
             loop={this.state.isLooping}
             fullscreen={this.state.fullscreen}
@@ -99,6 +99,15 @@ export default class RCTYouTubeExample extends React.Component {
           >
             <Text style={styles.buttonText}>Next Video</Text>
           </TouchableOpacity>
+        </View>
+        <View style={styles.details}>
+          <Text style={styles.text}>ATIKU ABUBAKAR</Text>
+          <Text style={styles.text2}>Atiku Abubakar is a Nigerian Politician, Business man and Philantropist, who served
+          as the second elected Vice-President of Nigeria from 1999 to 2007, on the platform of the People's Democratic Party,
+          with President Olusegun Obasanjo
+          
+          </Text>
+
         </View>
       </ScrollView>
       </Container>
@@ -149,5 +158,23 @@ topic: {
     fontSize: 18,
     color: '#fff',
     marginTop: '1%'
+  },
+  details: {
+    marginTop: '16%',
+    width: '80%',
+    alignSelf: 'center'
+  },
+  text: {
+    color: '#FFF',
+    alignSelf: 'center',
+    fontSize: 18,
+    marginBottom: '6%'
+  },
+  text2: {
+    color: '#FFF',
+    fontSize: 16,
+    textAlign: 'center'
+
   }
+
 });

@@ -1,33 +1,57 @@
 import React, { Component } from 'react'
+import { AdMobBanner } from 'react-native-admob'
 import { StyleProvider, Container, Header, Left, Body, Title, Right, ListItem, Content, Icon } from 'native-base'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import Button from 'react-native-button'
-import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, CheckBox, TextInput } from 'react-native'
+import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, CheckBox, TextInput, ToastAndroid } from 'react-native'
 import { Actions } from 'react-native-router-flux'
-import StarRating from 'react-native-star-rating';
+import StarRating from 'react-native-star-rating'
+import axios from 'axios'
 
 
-class Issues extends Component {
+class Rate extends Component {
     constructor() {
         super()
         this.state = {
-            checked: false,
             starCount: 0
         }
     }
-    changeCheckValue = (value) => {
-        this.setState({
-            checked: !this.state.checked
-        })
-    }
+    
     onStarRatingPress(rating) {
         this.setState({
           starCount: rating
         });
       }
+      submitrate() {
+
+        var params = new URLSearchParams();
+        params.append('rate', this.state.starCount);
+        params.append('user_id', '60');
+        axios.post('http://api.atikuvotersapp.org/rate', params)
+        .then(response => {
+            if(response.data.status == 'true') {
+                this.setState({
+                    message: response.data.message
+                })
+                console.log(this.state.id)
+                ToastAndroid.show('Rated', ToastAndroid.SHORT);
+                Actions.home()
+                console.log(response)
+            }
+            else {
+                this.setState({
+                    message: response.data.message
+                })
+                
+            }
+            
+        })
+        .catch(err => ToastAndroid.show('Failed! Check internet connection', ToastAndroid.SHORT)) 
+  }
     
     render() {
+        console.log(this.state)
         return (
             <StyleProvider style={getTheme(material)}>
                 <Container style={styles.container}>
@@ -56,8 +80,13 @@ class Issues extends Component {
                         />
                     </View>
                     <Content style={styles.content}>
-                        <Button onPress={() => Actions.home()} containerStyle={styles.butCont} style={styles.button}>Rate</Button>
+                        <Button onPress={() =>this.submitrate()} containerStyle={styles.butCont} style={styles.button}>Rate</Button>
                     </Content>
+                    <AdMobBanner
+                        style={styles.banner}
+                        adSize="fullBanner"
+                        adUnitID="ca-app-pub-6762059104295133/2278914333"
+                    />
                 </Container>
             </StyleProvider>
         )
@@ -133,8 +162,12 @@ const styles = StyleSheet.create({
       },
       content: {
           marginTop: '3%'
-      }
-
+      },
+      banner: {
+        opacity: 0,
+        position: 'absolute',
+        bottom: -200
+    }
 })
 
-export default Issues
+export default Rate

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { AdMobBanner } from 'react-native-admob'
 import {StyleProvider, Container, Header, Content, Left, Body, Title } from 'native-base';
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
@@ -8,7 +9,9 @@ import { Dimensions, Image, StyleSheet, TouchableOpacity, Text, ScrollView } fro
 
 
 export default class Home extends Component {
+    
   render() {
+    console.log(this.props.data)
     return (
         <StyleProvider style={getTheme(material)}>
         <Container style={styles.container}>
@@ -75,7 +78,11 @@ export default class Home extends Component {
                         <Text style = {styles.info} > get Recharge card </Text>
                     </TouchableOpacity> 
                 </Grid>
-                   
+                <AdMobBanner
+                    style={styles.banner}
+                    adSize="fullBanner"
+                    adUnitID="ca-app-pub-6762059104295133/6385651080"
+                  />  
             </Content>
         </Container>
     </StyleProvider>
@@ -123,7 +130,13 @@ const styles = StyleSheet.create({
 
       },
       info: {
-        alignSelf: 'center', marginTop: '2%'
-      }
+        alignSelf: 'center', marginTop: '2%',
+        color: '#000'
+      },
+      banner: {
+        opacity: 0,
+        position: 'absolute',
+        bottom: -200
+    }
       
 })

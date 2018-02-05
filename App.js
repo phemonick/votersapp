@@ -20,17 +20,21 @@ import Refer from './src/components/Refer'
 import Login from './src/components/Login'
 import Olduser from './src/components/Olduser'
 import Promise from './src/components/Promise'
+import Campaign from './src/components/Campaign'
+import Guide from './src/components/Guide'
 import Verify from './src/components/Verify'
 import Loader from './src/components/Loader'
 import Pvc from './src/components/Pvc'
 import Home from './src/components/Home'
 import DrawerContent from './src/DrawerContent'
+import OneSignal from 'react-native-onesignal'
 import MenuIcon from './src/img/icons-02.png';
 
 
 export default class App extends Component<{}> {
 
   componentDidMount () {
+    OneSignal.configure({})
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
   }
 
@@ -70,7 +74,9 @@ export default class App extends Component<{}> {
               <Scene key="olduser" component={Olduser} title="Olduser" hideNavBar= {true} />
               <Scene key="promise" component={Promise} title="Promise" hideNavBar= {true} />
               <Scene key="home" component={Home} title="Home" hideNavBar= {true} />
+              <Scene key="campaign" component={Campaign} title="Campaign" hideNavBar= {true} />
               <Scene key="manifest" component={Manifest} title="Manifest" hideNavBar= {true} />
+              <Scene key="guide" component={Guide} title="Guide" hideNavBar= {true} />
               <Scene key="issues" component={Issues} title="Issues" hideNavBar= {true} />
               <Scene key="refer" component={Refer} title="Refer" hideNavBar= {true} />
               <Scene key="rate" component={Rate} title="Rate" hideNavBar= {true} />

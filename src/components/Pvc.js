@@ -1,22 +1,29 @@
 import React, { Component } from 'react'
+import { AdMobBanner } from 'react-native-admob'
 import { StyleProvider, Container, Header, Left, Body, Title, Right, Content } from 'native-base'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, CheckBox, TextInput, BackHandler } from 'react-native'
+import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, CheckBox, TextInput, BackHandler, Alert, Platform } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import Button from 'react-native-button'
-import RNFB from 'react-native-fetch-blob'
+import * as Progress from 'react-native-progress';
+import RNFetchBlob from 'react-native-fetch-blob'
+import axios from 'axios'
 
-class Manifest extends Component {
+class Pvc extends Component {
     constructor() {
         super()
         this.state = {
-            
+            progress: 0,
+            message: "",
+            downloaded: '',
+            url: ''
         }
     }
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+        this.urlget()
         }
       componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
@@ -29,10 +36,45 @@ class Manifest extends Component {
         Actions.pop();
         return true;
       }
-    changeCheckValue = (value) => {
-        this.setState({
-            checked: !this.state.checked
+      urlget() {
+        axios.get('http://api.atikuvotersapp.org/regcenters')
+        .then(response => {
+            console.log( response.data.message[0].name)
+            this.setState({url: response.data.message[0].name})
         })
+      }
+      getpvc(pdf) {
+        if (Platform.OS === 'android') {
+        let dirs = RNFetchBlob.fs.dirs
+        RNFetchBlob
+        .config({
+            addAndroidDownloads : {
+                useDownloadManager : true, // <-- this is the only thing required
+                // Optional, override notification setting (default to true)
+                notification : false,
+                // Optional, but recommended since android DownloadManager will fail when
+                // the url does not contains a file extension, by default the mime type will be text/plain
+                description : 'File downloaded by download manager.'
+            },
+            path: dirs.DownloadDir+ `/regcenters.pdf`
+        })
+        .fetch('GET', this.state.url)
+        .progress({count: 10},(received, total) => {
+            this.setState({
+                progress: ((received / total)),
+                animated: true
+            })
+            
+        })
+        .then((res) => {
+            console.log(res)
+           
+        })
+        .then(res => Alert.alert('Saved', 'Photo added to camera roll!'))
+        .then(res => RNFetchBlob.fs.scanFile([{path}]))
+        } else {
+        console.log(res)
+        }
     }
     render() {
         return (
@@ -50,7 +92,7 @@ class Manifest extends Component {
                         </Header>
                         <Text style={styles.topic} > GETTING YOUR PVC </Text>
                         <Content>
-                            <TouchableOpacity  onPress={()=> Actions.opportunity()}>
+                            <TouchableOpacity  onPress={(pdf)=> this.getpvc(this.state.url)}>
                             <Grid style={styles.grid}>
                                 <View style= {{backgroundColor: '#eee', height: 120, width: '36%'}} >
                                     <Image style={styles.img} source = {require('../img/icons-21.png')} />
@@ -62,6 +104,11 @@ class Manifest extends Component {
                             </Grid>
                             </TouchableOpacity>
                         </Content>
+                        <AdMobBanner
+                            style={styles.banner}
+                            adSize="fullBanner"
+                            adUnitID="ca-app-pub-6762059104295133/9532278899"
+                        />
                     </Container>
                 </StyleProvider>
         )
@@ -104,10 +151,14 @@ const styles = StyleSheet.create({
     subinfo: {
         fontSize: (( Dimensions.get('window').height) * 0.018),
         marginTop: '1%'
+    },
+    banner: {
+        opacity: 0,
+        position: 'absolute',
+        bottom: -200
     }
-   
 
 
 })
 
-export default Manifest
+export default Pvc

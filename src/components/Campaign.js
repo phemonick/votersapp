@@ -1,17 +1,16 @@
 import React, { Component } from 'react'
-import { StyleProvider, Container, Header, Left, Body, Title, Right, Icon, ListItem, Content } from 'native-base'
+import { StyleProvider, Container, Header, Left, Body, Title, Icon, ListItem, Content } from 'native-base'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
-import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, CheckBox, TextInput, BackHandler, Clipboard, AsyncStorage, ToastAndroid } from 'react-native'
+import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, TextInput, BackHandler, ToastAndroid, Keyboard, KeyboardAvoidingView } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import Button from 'react-native-button'
-import { Share } from 'react-native'
 
-class Refer extends Component {
+class Campaign extends Component {
     constructor() {
         super()
         this.state = {
-            text: 'djnjnfg'
+            email: ''
         }
     }
     componentDidMount() {
@@ -28,19 +27,13 @@ class Refer extends Component {
         Actions.pop();
         return true;
       }
-      writeToClipboard = async () => {
-        await Clipboard.setString(this.state.text);
-        ToastAndroid.show('Copied to Clipboard', ToastAndroid.SHORT);
-      };
-      _shareTextMessage () {
-        Share.share({
-          message: 'Such sharing! Much wow!'
-        })
-        .then((result) => console.log(result))
-        .catch(err => console.log(err))
-      }
+      submitmail() {
+          Actions.home()
+          ToastAndroid.show('Thank you for joining the campaign', ToastAndroid.SHORT)
+      } 
     render() {
         return (
+            
                 <StyleProvider style={getTheme(material)}>
                     <Container style={styles.container}>
                         <Header style={{ marginTop: (( Dimensions.get('window').height) * 0.024)}}>
@@ -53,19 +46,24 @@ class Refer extends Component {
                                 <Title style={{fontSize: (( Dimensions.get('window').height) * 0.024)}}>ATIKU'S VOTERS APP</Title>
                             </Body>  
                         </Header>
-                        <Text style={styles.topic} > REFER A FRIEND </Text>
+                        <Text style={styles.topic} > JOIN THE CAMPAIGN </Text>
                         <Content style={styles.content}>
-                           <Text style={styles.subtopic}>Your Referral Link</Text>
-                           <Text style={styles.subtopic2}>vjcbhjb</Text>
-                           <Button onPress={() => this.writeToClipboard()} containerStyle={styles.butCont} style={styles.button}>Share</Button>
-                        </Content>
-                        <Content style={styles.shareContent}>
-                            <Image source={require('../img/icons-24.png')} style={styles.logo}/>
-                            <Text style={styles.subtopic}>Share the app with your friends</Text>
-                            <Button onPress={() => this._shareTextMessage()} containerStyle={styles.butCont2} style={styles.button2}>Share</Button>
+                           <Text style={styles.subtopic}>Enter your email address to receive Newsletters</Text>
+                           <TextInput
+                            style={styles.input}
+                            placeholderTextColor= {'#ccc'}
+                            fontFamily= 'Roboto'
+                            onChangeText={(email) => this.setState({email})}
+                            onSubmitEditing={Keyboard.dismiss}
+                            underlineColorAndroid={'#008841'}
+                            placeholder={'Email Address'}
+                            multiline={false}
+                        />
+                           <Button onPress={() => this.submitmail()} containerStyle={styles.butCont} style={styles.button}>Submit</Button>
                         </Content>
                     </Container>
                 </StyleProvider>
+            
         )
     }
 }
@@ -87,11 +85,19 @@ const styles = StyleSheet.create({
         marginTop: '5%',
         alignSelf: 'center' 
     },
+    input: {
+        marginTop: '2%',
+        width: '100%',
+        color: '#222',
+        fontSize: (( Dimensions.get('window').height) * 0.025),
+        borderBottomColor:'#fff',
+        alignSelf: 'center'
+      },
     button: {
         marginTop: '4%',
         backgroundColor: '#5cb85c',
         color: '#fff',
-        padding: '12%'
+        padding: '6%'
 
       },
       butCont: {
@@ -140,4 +146,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default Refer
+export default Campaign

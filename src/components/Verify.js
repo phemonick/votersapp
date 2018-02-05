@@ -31,6 +31,7 @@ export default class Verify extends Component{
             console.log('err', error)
           }
     }
+         
 
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
@@ -76,10 +77,9 @@ export default class Verify extends Component{
             <ImageBackground source={require('../img/bg-32.png')} style={styles.bgImg} >
             <KeyboardAvoidingView style={styles.container}>
                 <Image source={require('../img/icons-24.png')} style={styles.logo}/>
-                {/* <View style={ styles.bottom  } > */}
+                <View style={ styles.bottom  } >
                 <Text style = {styles.instruction}> Verify Your Phone Number </Text> 
                 <Text style = {styles.instruction}> Enter Five Digit Code</Text>
-                <View style={ styles.bottom  } >    
                     <View style={ styles.code  }> 
                         <CodeInput
                             ref="codeInputRef1"
@@ -99,12 +99,11 @@ export default class Verify extends Component{
                             }}
                         />
                     </View>
-               
+                </View>
                     <View style={styles.buttonContainer}>
+                        <Button onPress={() => Actions.home()} containerStyle={styles.butCont} style={styles.button}>Verify</Button>
                         <Button onPress={() => Actions.verify()} containerStyle={styles.butCont} style={styles.button}>Resend Code</Button>                 
                     </View>
-                    </View>
-                
                         
             </KeyboardAvoidingView>
             </ImageBackground>
@@ -113,8 +112,7 @@ export default class Verify extends Component{
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        
+        flex: 1
     },
     open: {
         width:  (( Dimensions.get('window').height) * 0.025),
@@ -171,17 +169,8 @@ const styles = StyleSheet.create({
           marginTop: '3%',
           width: '80%',
           flex: 1,
-          justifyContent: 'center',
           flexDirection: 'row',
           flexWrap: 'wrap',
           alignSelf: 'center'
-      },
-      bottom: {
-        display: 'flex',
-        flexDirection: 'column',
-        height:  '35%',
-        alignItems: 'center',
-        justifyContent: 'space-between'
-        
-    },
+      }
 })

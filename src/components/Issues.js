@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import { AdMobBanner } from 'react-native-admob'
 import { StyleProvider, Container, Header, Left, Body, Title, Right, Icon, ListItem, Content } from 'native-base'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import Button from 'react-native-button'
-import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, CheckBox, TextInput, BackHandler } from 'react-native'
+import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, CheckBox, TextInput, BackHandler, ToastAndroid } from 'react-native'
 import { Actions } from 'react-native-router-flux'
+import axios from 'axios'
 
 class Issues extends Component {
     constructor() {
@@ -12,7 +14,8 @@ class Issues extends Component {
         this.state = {
             checked: false,
             checked2: false,
-            checked3: false
+            checked3: false,
+            other: 'National issue'
         }
     }
     componentDidMount() {
@@ -44,6 +47,35 @@ class Issues extends Component {
             checked3: !this.state.checked3
         })
     }
+    submitissue() {
+
+        var params = new URLSearchParams();
+        params.append('unemployment', this.state.checked);
+        params.append('security', this.state.checked2);
+        params.append('electricity', this.state.checked3);
+        params.append('others', this.state.other);
+        params.append('user_id', '60');
+        axios.post('http://api.atikuvotersapp.org/addnationalissue', params)
+        .then(response => {
+            if(response.data.status == 'true') {
+                this.setState({
+                    message: response.data.message
+                })
+                console.log(this.state.id)
+                ToastAndroid.show('Done', ToastAndroid.SHORT);
+                Actions.home()
+                console.log(response)
+            }
+            else {
+                this.setState({
+                    message: response.data.message
+                })
+                
+            }
+            
+        })
+        .catch(err => ToastAndroid.show('Failed! Check internet connection', ToastAndroid.SHORT)) 
+  }
     render() {
         return (
             <StyleProvider style={getTheme(material)}>
@@ -85,15 +117,21 @@ class Issues extends Component {
                             style={styles.input} 
                             multiline = {true}
                             numberOfLines = {8}
+                            onChangeText={(other) => this.setState({other})}
                             underlineColorAndroid={'transparent'}
                             style= { styles.input }
                             placeholder = { 'Additional information'}
                         />
                          <Content style={styles.content}>
-                            <Button onPress={() => Actions.rate()} containerStyle={styles.butCont} style={styles.button}>Submit</Button>
+                            <Button onPress={() => this.submitissue()} containerStyle={styles.butCont} style={styles.button}>Submit</Button>
                         </Content>
                         
                         </Content>
+                        <AdMobBanner
+                            style={styles.banner}
+                            adSize="fullBanner"
+                            adUnitID="ca-app-pub-6762059104295133/4352963230"
+                        />
                 </Container>
             </StyleProvider>
         )
@@ -148,6 +186,11 @@ const styles = StyleSheet.create({
       },
       content: {
         marginTop: '3%'
+    },
+    banner: {
+        opacity: 0,
+        position: 'absolute',
+        bottom: -200
     }
 
 })
