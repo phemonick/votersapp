@@ -114,7 +114,7 @@ export default class Opportunity extends Component{
                                             <Image style = {styles.Jimg1} source = {require('../img/icons-13.png')} />
                                             
                                             <View style = {styles.jImg}>
-                                            <Text style ={styles.text} > Jobs For Nigerians </Text>
+                                                <Text style ={styles.text} > Jobs For Nigerians </Text>
                                             </View>
                                         </View>
                                         <View style = {styles.partb} > 
@@ -157,7 +157,7 @@ export default class Opportunity extends Component{
                                             <TouchableOpacity style={styles.submitCv} onPress={() => {
                                                 ToastAndroid.show('Submitted', ToastAndroid.SHORT)
                                                 Actions.home()
-                                            }}>t
+                                            }}>
                                                 <Text style={styles.submitCvT}> Submit Idea </Text>
                                             </TouchableOpacity>
                                         </View>

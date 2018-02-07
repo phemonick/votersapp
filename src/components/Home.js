@@ -4,11 +4,78 @@ import {StyleProvider, Container, Header, Content, Left, Body, Title } from 'nat
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Actions } from 'react-native-router-flux'
-import { Dimensions, Image, StyleSheet, TouchableOpacity, Text, ScrollView } from 'react-native'
+import { Actions } from 'react-native-router-flux';
+import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
+import { Dimensions, ToastAndroid, Image, ImageEditor, StyleSheet, TouchableOpacity, Text, ScrollView } from 'react-native'
 
 
 export default class Home extends Component {
+
+    constructor(){
+        super();
+    }
+    // async cropImage(uri, cropData, success, failure){
+
+    // }
+   async pickFIle(){
+        DocumentPicker.show({
+            filetype: [DocumentPickerUtil.images()],
+          },(error,res) => {
+              Image.getSize(res.uri, (width, height) => {
+                  console.log(width, height)
+              ImageEditor.cropImage(res.uri,
+                {
+                    offset: { x: 0, y: 0 },
+                    size: { width: width, height: height },
+                    displaySize: { width: 50, height: 50 },
+                    resizeMode: 'contain',
+                  },(res)=>{
+                      console.log('resImg', res)
+                    ToastAndroid.show(
+                        'success',
+                        ToastAndroid.SHORT,
+                        
+                      );
+                  },
+                  (err)=>{
+                    ToastAndroid.show(
+                        'Failure',
+                        ToastAndroid.SHORT,
+                        
+                      );
+                  }
+            )})
+            // Android
+            if(error){
+                console.log(error)
+                // this.setState({
+                //     choosen: false
+                // })
+                return null
+            }
+            ToastAndroid.show(
+                'File has been selected',
+                ToastAndroid.SHORT,
+                
+              );
+              const split = res.uri.split('/');
+            const name = split.pop();
+            const inbox = split.pop();
+            //   this.setState({
+            //     choosen: true,
+            //     filePath: res.uri
+            // })
+              
+            console.log(
+               res.uri,
+               res.type, // mime type
+               res.fileName,
+               res.fileSize
+            );
+            console.log({split: split, name: name, inbox: inbox})
+          });
+          
+    }
     
   render() {
     console.log(this.props.data)
@@ -25,7 +92,9 @@ export default class Home extends Component {
                     <Title style={{fontSize: (( Dimensions.get('window').height) * 0.024)}}>ATIKU'S VOTERS APP</Title>
                 </Body>  
             </Header>
-            <Image source={require('../img/location.jpg')} style={styles.dp}/>
+            <TouchableOpacity onPress ={this.pickFIle.bind(this)} >
+                <Image source={require('../img/location.jpg')} style={styles.dp}/>
+            </TouchableOpacity>
             <Content>
                 <Grid style={styles.grid}>
                         <TouchableOpacity onPress={()=> Actions.guide()} style= {{backgroundColor: '#ddd', height: 160, width: '42%'}} >

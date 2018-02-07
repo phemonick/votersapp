@@ -29,6 +29,7 @@ import Home from './src/components/Home'
 import DrawerContent from './src/DrawerContent'
 import OneSignal from 'react-native-onesignal'
 import MenuIcon from './src/img/icons-02.png';
+import Chat from './src/components/Chat';
 
 
 export default class App extends Component<{}> {
@@ -73,6 +74,7 @@ export default class App extends Component<{}> {
               <Scene key="verify" component={Verify} title="Verify" hideNavBar= {true} />
               <Scene key="olduser" component={Olduser} title="Olduser" hideNavBar= {true} />
               <Scene key="promise" component={Promise} title="Promise" hideNavBar= {true} />
+              <Scene key="chat" component={Chat} title="Chat" hideNavBar= {true} />
               <Scene key="home" component={Home} title="Home" hideNavBar= {true} />
               <Scene key="campaign" component={Campaign} title="Campaign" hideNavBar= {true} />
               <Scene key="manifest" component={Manifest} title="Manifest" hideNavBar= {true} />
