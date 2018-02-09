@@ -179,8 +179,8 @@ const styles = StyleSheet.create({
       backgroundColor: '#FFF',
   },
   chatT: {
-    color: '#000',
-    width: '100%'
+    color: '#2C3E50',
+    width: '80%'
   },
   open: {
       width:  (( Dimensions.get('window').height) * 0.025),
