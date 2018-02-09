@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { StyleProvider, Container,View, Header, DeckSwiper, Card, CardItem, Text, Left, Body,Title, Content, Icon } from 'native-base';
-import { StyleSheet, Dimensions, TouchableOpacity, Image } from 'react-native'
+import { StyleSheet, Dimensions, TouchableOpacity, Image, BackHandler, ScrollView } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 const data = [
     {
@@ -26,6 +26,21 @@ const data = [
 
 ]
 export default class Guide extends Component {
+    componentDidMount()  {
+        BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+    }
+    onBackPress () {
+        if (Actions.state.index === 0) {
+        return false;
+        }
+
+        Actions.pop();
+        return true;
+        }
+   
   render() {
     return (
         <StyleProvider style={getTheme(material)}>
@@ -53,8 +68,10 @@ export default class Guide extends Component {
             <View style={styles.deck}> 
                 <Text style = {[styles.topic, styles.step]}> {item.step} </Text>
                     {item.img}
-                <Text style = {[styles.topic, styles.top]}>{item.topic} </Text>
-                <Text style={styles.cont}>{item.content} </Text>
+                <ScrollView>
+                    <Text style = {[styles.topic, styles.top]}>{item.topic} </Text>
+                    <Text style={styles.cont}>{item.content} </Text>
+                </ScrollView>
 
             </View>
             }
@@ -105,11 +122,16 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         color: '#fff',
         marginBottom: '6%',
-        marginTop: '6%'
+        marginTop: '6%',
+        textAlign: 'center',
+        width: '80%',
     },
     cont: {
         color: '#fff',
         textAlign: 'center',
+        width: '80%',
+        alignSelf: 'center',
+        marginBottom: '25%'
     }
     
     

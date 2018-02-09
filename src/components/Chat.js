@@ -1,19 +1,25 @@
 import React from 'react';
-import { View, Text, AsyncStorage } from 'react-native';
+import { View, Text, AsyncStorage , StyleSheet, BackHandler, Dimensions, TouchableOpacity, Image, TextInput} from 'react-native';
+import { StyleProvider, Container, Header, Left, Right, Body, Title} from 'native-base'
+import getTheme from '../../native-base-theme/components';
+import material from '../../native-base-theme/variables/material';
 import BackgroundTimer from 'react-native-background-timer'
 import { GiftedChat } from 'react-native-gifted-chat';
 window.navigator.userAgent = 'react-native'
  const io = require('react-native-socket.io-client/socket.io');
+import axios from 'axios'
+import { Actions } from 'react-native-router-flux'
 
 const USER_ID = '@userId';
 
-class Main extends React.Component {
+class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       messages: [],
       userId: null
     };
+    
     // this.onReceivedMessage = this.onReceivedMessage.bind(this);
     this.socket = io('https://polar-forest-71145.herokuapp.com');
     this.socket.on('connect', ()=>{
@@ -36,6 +42,29 @@ class Main extends React.Component {
     
     // this.determineUser();
   }
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+      // axios.get(`http://api.atikuvotersapp.org/users/${this.props.data.id}`)
+      // .then(response => { 
+      //       this.setState({
+      //           userId: response.data.message[0].email,
+      //           user1un: response.data.message[0].name
+      //       })
+          
+      // })
+        
+  }
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+  }
+   onBackPress () {
+    if (Actions.state.index === 0) {
+      return false;
+    }
+
+    Actions.pop();
+    return true;
+  }
 
   onReceivedMessage(messages) {
     console.log({messageReceived: messages})
@@ -47,7 +76,7 @@ class Main extends React.Component {
       message.map((message)=> {
          obj = {
            message: message.text,
-          userId: 'wilson@gmail.com',
+          user1id: 'wilson@gmail.com',
           user1un: 'wilson',
           user2id: 'admin2@gmail.com',
           status: 0,
@@ -83,19 +112,45 @@ class Main extends React.Component {
     this.socket.emit('msgadmin', data);
     this._storeMessages(messages);
   }
+  
 
   render() {
+      console.log(this.state)
     var user = { _id: this.state.userId || -1 };
 
     return (
-      <GiftedChat
-        messages={this.state.messages}
-        onSend={this.onSend}
-        user={{
-          _id: 'wilson@gmail.com',
-          name: 'wilson'
-        }}
-      />
+      <StyleProvider style={getTheme(material)}>
+          <Container style={styles.container}>
+              <Header style={{ marginTop: (( Dimensions.get('window').height) * 0.024)}}>
+                  <Left>
+                    <TouchableOpacity onPress={() => Actions.drawerOpen()} style={styles.touchable} activeOpacity = {0.8}>
+                        <Image source={require('../img/icons-02.png')} style={styles.open}/>
+                    </TouchableOpacity>
+                  </Left>
+                  <Body>
+                    <Title style={styles.title}>CHAT WITH ATIKU</Title>
+                  </Body>
+                  <Right>
+                    <TouchableOpacity onPress={() => Actions.pop()} style={styles.touchable} activeOpacity = {0.8}>
+                        <Image source={require('../img/back.png')} style={styles.open}/>
+                    </TouchableOpacity>    
+                  </Right>  
+              </Header>
+        <GiftedChat
+          messages={this.state.messages}
+          onSend={this.onSend}
+          user={{
+            _id: 'wilson@gmail.com',
+            name: 'wilson'
+          }}
+          textInputProps={{
+            style: styles.chatT
+          }}
+        />
+    </Container>
+  </StyleProvider>
+
+      
     );
   }
 
@@ -118,5 +173,91 @@ class Main extends React.Component {
 
   }
 }
-module.exports = Main;
+
+const styles = StyleSheet.create({
+  container: {
+      backgroundColor: '#FFF',
+  },
+  chatT: {
+    color: '#000',
+    width: '100%'
+  },
+  open: {
+      width:  (( Dimensions.get('window').height) * 0.025),
+      height:  (( Dimensions.get('window').height) * 0.025),
+      marginTop: '9%',
+      marginLeft: '4%'
+
+  },
+  
+  topic: {
+      color: '#008841',
+      fontSize: (( Dimensions.get('window').height) * 0.025),
+      marginTop: '5%',
+      alignSelf: 'center' 
+  },
+  checks: {
+      color: '#000',
+      marginLeft: '1%'
+  },
+  title: {
+    fontSize: (( Dimensions.get('window').height) * 0.024), 
+    position: 'absolute',
+    top: '-18%',
+    left: '26%'
+},
+  box:{
+      flex: 1,
+      justifyContent: 'center'
+      
+  },
+  check: {
+      display: 'flex',
+      flexDirection: 'row'
+  },
+  input: {
+      color: '#000',
+      marginTop: '3%',
+      borderWidth: 1,
+      borderColor: '#999',
+      width: '90%',
+      alignSelf: 'center',
+      textAlignVertical: 'top',
+      fontSize: (( Dimensions.get('window').height) * 0.018)
+  },
+  signup: {
+      fontSize:  (( Dimensions.get('window').height) * 0.025),
+      color: '#fff',
+  },
+  button: {
+      margin: '3%',
+      backgroundColor: '#5cb85c',
+      color: '#fff',
+      padding: '8%'
+
+    },
+    butCont: {
+      borderRadius: 5,
+      width: '50%',
+      alignSelf: 'center'
+    },
+    content: {
+      marginTop: '3%'
+  },
+  banner: {
+      opacity: 0,
+      position: 'absolute',
+      bottom: -200
+  },
+  checkbox: {
+      backgroundColor: '#999'
+  },
+  widget: {
+    backgroundColor: '#000',
+  },
+  
+
+})
+
+module.exports = Chat;
 

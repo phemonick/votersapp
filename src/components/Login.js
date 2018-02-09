@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, ImageBackground, TextInput, Keyboard, TouchableOpacity, Dimensions, Picker, BackHandler, ToastAndroid} from 'react-native'
+import { View, Text, Image, StyleSheet, ImageBackground, TextInput, Keyboard, TouchableOpacity, Dimensions, Picker, BackHandler, ToastAndroid, ScrollView} from 'react-native'
 import { Container, Header, Content, Form, Item, Input, Label } from 'native-base';
 import Button from 'react-native-button'
 import { Actions } from 'react-native-router-flux'
 import DatePicker from 'react-native-datepicker'
 import data  from './StateData'
 import axios from 'axios'
-var URLSearchParams = require('url-search-params');
+// import 'url-search-params-polyfill';
 
 export default class Login extends Component{
     constructor(){
@@ -19,9 +19,9 @@ export default class Login extends Component{
            email: '',
            dob: '',
            upline: '',
-           data: data,
            id: '',
-           message: ''
+           message: '',
+           disabled: false
 
         }
     }
@@ -37,33 +37,53 @@ export default class Login extends Component{
        BackHandler.exitApp()
       }
       signup() {
-        return fetch('http://api.atikuvotersapp.org/addusers', {
-            method: 'POST',
-            headers: {
-              Accept: 'application/x-www-form-urlencoded',
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: JSON.stringify({
-                name: this.state.name,
-                gender: this.state.gender,
-                email: this.state.email,
-                state: this.state.state,
-                mobile:  this.state.mobile,
-                dob:  this.state.dob,
-                upline:  this.state.upline
-            }),
-          }).then(response => console.log(response))
+          Actions.home()
+        // Actions.verify({data: this.state})
+        // var params = new URLSearchParams();
+        // params.append('name', this.state.name);
+        // params.append('gender', this.state.gender);
+        // params.append('email', this.state.email);
+        // params.append('state', this.state.state);
+        // params.append('mobile', this.state.mobile);
+        // params.append('dob', this.state.dob);
+        // params.append('upline', this.state.upline);
+        // this.setState({disabled: true})
+        // axios.post('http://api.atikuvotersapp.org/addusers', params)
+        // .then(response => {
+        //     if(response.data.status == 'true') {
+        //         this.setState({
+        //             id: response.data.details
+        //         })
+        //         console.log(this.state.id)
+        //         Actions.verify({data: this.state})
+        //         console.log(response)
+        //     }
+        //     else {
+        //         this.setState({
+        //             message: response.data.message,
+        //             disabled: false
+        //         })
+        //         ToastAndroid.show(response.data.message, ToastAndroid.SHORT)
+        //         console.log({else:response})
+
+        //     }
+            
+        // })
+        // .catch(err => console.log(err)) 
+
       }
     render(){
-        const items = this.state.data.map((item, i) => {
+        const items = data.map((item, i) => {
             return (
                 <Picker.Item color='#fff' label={item.name} value={item.name.toLowerCase()} key={item.id} />
             )
         })
         return(
             <ImageBackground source={require('../img/bg-32.png')} style={styles.bgImg} >
+
             <View style={styles.container}>
                 <Image source={require('../img/icons-24.png')} style={styles.logo}/>
+                <ScrollView>
                     <TextInput
                             style={styles.input}
                             placeholderTextColor= {'#fff'}
@@ -141,7 +161,7 @@ export default class Login extends Component{
                         customStyles={{
                             placeholderText: {
                                 color: '#fff',
-                                fontSize: 18,
+                                fontSize: 16,
                                 alignSelf:'flex-start',
                                 paddingLeft:10
                             },
@@ -161,15 +181,17 @@ export default class Login extends Component{
                     />
                     <Content>
                         <Button onPress={() => {
-                            this.signup()
-                            
-                            
-                        }} containerStyle={styles.butCont} style={styles.button}>Sign Up</Button>
+                            this.signup()}}
+                            containerStyle={styles.butCont}
+                            style={styles.button}
+                            styleDisabled={{backgroundColor: '#999', opacity: 0.5}}
+                            disabled={this.state.disabled}
+                           >Sign Up</Button>
                     </Content>
                     <Content>
                         <Text style={styles.olduser}onPress={() => Actions.olduser()}>Already a user? Verify phone number here</Text>
                     </Content>
-                    
+                </ScrollView>      
             </View>
             </ImageBackground>
         )
@@ -244,7 +266,7 @@ const styles = StyleSheet.create({
       },
       olduser: {
         color: '#fff',
-        marginTop: '3%',
+        marginBottom: '3%',
         alignSelf: 'center',
         fontSize:  (( Dimensions.get('window').height) * 0.023)
       }

@@ -152,7 +152,6 @@ android {
 
 dependencies {
     compile project(':react-native-background-timer')
-    compile project(':react-native-onesignal')
     compile project(':react-native-admob')
     compile project(':react-native-document-picker')
     compile project(':react-native-youtube')

@@ -8,7 +8,8 @@ import {
   PixelRatio,
   Dimensions,
   Platform,
-  Image
+  Image,
+  BackHandler
 } from 'react-native';
 import { StyleProvider, Container, Header, Left, Body, Title, Content } from 'native-base'
 import getTheme from '../../native-base-theme/components';
@@ -31,6 +32,21 @@ export default class Promise extends React.Component {
     containerMounted: false,
     containerWidth: null,
   };
+  componentDidMount()  {
+    BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+}
+componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+}
+onBackPress () {
+    if (Actions.state.index === 0) {
+    return false;
+    }
+
+    Actions.pop();
+    return true;
+    }
+
 
   render() {
     return (

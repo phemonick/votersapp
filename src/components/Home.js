@@ -1,82 +1,26 @@
 import React, { Component } from 'react';
 import { AdMobBanner } from 'react-native-admob'
-import {StyleProvider, Container, Header, Content, Left, Body, Title } from 'native-base';
+import {StyleProvider, Container, Header, Content, Left, Body, Title, Right } from 'native-base';
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Actions } from 'react-native-router-flux';
-import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
-import { Dimensions, ToastAndroid, Image, ImageEditor, StyleSheet, TouchableOpacity, Text, ScrollView } from 'react-native'
+import { Actions } from 'react-native-router-flux'
+import { Dimensions, Image, StyleSheet, TouchableOpacity, Text, ScrollView , BackHandler} from 'react-native'
 
 
 export default class Home extends Component {
-
-    constructor(){
-        super();
-    }
-    // async cropImage(uri, cropData, success, failure){
-
-    // }
-   async pickFIle(){
-        DocumentPicker.show({
-            filetype: [DocumentPickerUtil.images()],
-          },(error,res) => {
-              Image.getSize(res.uri, (width, height) => {
-                  console.log(width, height)
-              ImageEditor.cropImage(res.uri,
-                {
-                    offset: { x: 0, y: 0 },
-                    size: { width: width, height: height },
-                    displaySize: { width: 50, height: 50 },
-                    resizeMode: 'contain',
-                  },(res)=>{
-                      console.log('resImg', res)
-                    ToastAndroid.show(
-                        'success',
-                        ToastAndroid.SHORT,
-                        
-                      );
-                  },
-                  (err)=>{
-                    ToastAndroid.show(
-                        'Failure',
-                        ToastAndroid.SHORT,
-                        
-                      );
-                  }
-            )})
-            // Android
-            if(error){
-                console.log(error)
-                // this.setState({
-                //     choosen: false
-                // })
-                return null
-            }
-            ToastAndroid.show(
-                'File has been selected',
-                ToastAndroid.SHORT,
-                
-              );
-              const split = res.uri.split('/');
-            const name = split.pop();
-            const inbox = split.pop();
-            //   this.setState({
-            //     choosen: true,
-            //     filePath: res.uri
-            // })
-              
-            console.log(
-               res.uri,
-               res.type, // mime type
-               res.fileName,
-               res.fileSize
-            );
-            console.log({split: split, name: name, inbox: inbox})
-          });
-          
-    }
+    componentDidMount () {
+        BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+      }
     
+      componentWillUnmount () {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+      }
+    
+      onBackPress () {
+       BackHandler.exitApp()
+      }
+  
   render() {
     console.log(this.props.data)
     return (
@@ -89,12 +33,15 @@ export default class Home extends Component {
                     </TouchableOpacity>
                 </Left>
                 <Body>
-                    <Title style={{fontSize: (( Dimensions.get('window').height) * 0.024)}}>ATIKU'S VOTERS APP</Title>
-                </Body>  
+                    <Title style={styles.title}>ATIKU'S VOTERS APP</Title>
+                </Body>
+                <Right>
+                    <TouchableOpacity onPress={() => this. onBackPress()} style={styles.touchable} activeOpacity = {0.8}>
+                        <Image source={require('../img/back.png')} style={styles.open}/>
+                    </TouchableOpacity>    
+                </Right>  
             </Header>
-            <TouchableOpacity onPress ={this.pickFIle.bind(this)} >
-                <Image source={require('../img/location.jpg')} style={styles.dp}/>
-            </TouchableOpacity>
+            <Image source={require('../img/icons-24.png')} style={styles.dp}/>
             <Content>
                 <Grid style={styles.grid}>
                         <TouchableOpacity onPress={()=> Actions.guide()} style= {{backgroundColor: '#ddd', height: 160, width: '42%'}} >
@@ -107,27 +54,27 @@ export default class Home extends Component {
                         </TouchableOpacity> 
                 </Grid>
                 <Grid style={styles.grid}>
-                    <TouchableOpacity onPress={()=> Actions.manifest()} style= {{backgroundColor: '#eee', height: 160, width: '42%'}} >
+                    <TouchableOpacity onPress={()=> Actions.manifest({data: this.props.data.id})} style= {{backgroundColor: '#eee', height: 160, width: '42%'}} >
                         <Image style={styles.img}source = {require('../img/icons-16.png')} />
                         <Text style = {styles.info} > Add Manifest</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=> Actions.issues()} style= {{backgroundColor: '#ddd', height: 160, width: '42%'}} >
+                    <TouchableOpacity onPress={()=> Actions.issues({data: this.props.data.id})} style= {{backgroundColor: '#ddd', height: 160, width: '42%'}} >
                         <Image style={styles.img}source = {require('../img/icons-17.png')} />
                         <Text style = {styles.info} > National Issues </Text>
                     </TouchableOpacity> 
                 </Grid>
                 <Grid style={styles.grid}>
-                    <TouchableOpacity onPress={()=> Actions.chat()} style= {{backgroundColor: '#ddd', height: 160, width: '42%'}} >
+                    <TouchableOpacity onPress={()=> Actions.chat({data: this.props.data})} style= {{backgroundColor: '#ddd', height: 160, width: '42%'}} >
                         <Image style={styles.img}source = {require('../img/icons-18.png')} />
                         <Text style = {styles.info} > Chat with Atiku </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=> Actions.rate()} style= {{backgroundColor: '#eee', height: 160, width: '42%'}} >
+                    <TouchableOpacity onPress={()=> Actions.rate({data: this.props.data.id})} style= {{backgroundColor: '#eee', height: 160, width: '42%'}} >
                         <Image style={styles.img}source = {require('../img/icons-19.png')} />
                         <Text style = {styles.info} > Rate Atiku </Text>
                     </TouchableOpacity> 
                 </Grid>
                 <Grid style={styles.grid}>
-                    <TouchableOpacity onPress={()=> Actions.opportunity()} style= {{backgroundColor: '#eee', height: 160, width: '42%'}} >
+                    <TouchableOpacity onPress={()=> Actions.opportunity({data: this.props.data.id})} style= {{backgroundColor: '#eee', height: 160, width: '42%'}} >
                         <Image style={styles.img}source = {require('../img/icons-20.png')} />
                         <Text style = {styles.info} > Opportunity Center </Text>
                     </TouchableOpacity>
@@ -137,11 +84,12 @@ export default class Home extends Component {
                     </TouchableOpacity> 
                 </Grid>
                 <Grid style={styles.grid}>
-                    <TouchableOpacity onPress={()=> Actions.campaign()} style= {{backgroundColor: '#ddd', height: 160, width: '42%'}} >
+                    <TouchableOpacity onPress={()=> Actions.campaign({data: this.props.data.id})} style= {{backgroundColor: '#ddd', height: 160, width: '42%'}} >
                         <Image style={styles.img}source = {require('../img/icons-25.png')} />
-                        <Text style = {styles.info} > Join the Atiku Campaign </Text>
+                        <Text style = {styles.info} > Join the Atiku </Text>
+                        <Text style = {styles.info} > Campaign</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=> Actions.refer()} style= {{backgroundColor: '#eee', height: 160, width: '42%'}} >
+                    <TouchableOpacity onPress={()=> Actions.refer({data: this.props.data})} style= {{backgroundColor: '#eee', height: 160, width: '42%'}} >
                         <Image style={styles.img}source = {require('../img/icons-09.png')} />
                         <Text style = {styles.info} > Refer a friend to </Text>
                         <Text style = {styles.info} > get Recharge card </Text>
@@ -172,6 +120,12 @@ const styles = StyleSheet.create({
         fontSize: (( Dimensions.get('window').height) * 0.025),
         marginTop: '5%',
         alignSelf: 'center' 
+    },
+    title: {
+        fontSize: (( Dimensions.get('window').height) * 0.024), 
+        position: 'absolute',
+        top: '-18%',
+        left: '26%'
     },
     dp: {
         height: 100,

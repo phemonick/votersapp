@@ -6,13 +6,27 @@ import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, CheckBox, 
 import { Actions } from 'react-native-router-flux'
 import Button from 'react-native-button'
 import { Share } from 'react-native'
+import axios from 'axios'
 
 class Refer extends Component {
     constructor() {
         super()
         this.state = {
-            text: 'djnjnfg'
+            text: '',
+            mycount: 0,
+            cardCount: 0
         }
+    }
+    componentWillMount() {
+        axios.get(`http://api.atikuvotersapp.org/users/${this.props.data.id}`)
+        .then(response => { 
+                this.setState({
+                    text: response.data.message[0].mylink,
+                    mycount: response.data.message[0].mycount,
+                    cardCount: response.data.message[0].card_count,
+                })
+          console.log(response)
+      })
     }
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
@@ -34,7 +48,7 @@ class Refer extends Component {
       };
       _shareTextMessage () {
         Share.share({
-          message: 'Such sharing! Much wow!'
+          message: "Download Atiku's Voters App from the Google Play Store. Go to https://play.google.com/store/apps/details?id=com.votersapp"
         })
         .then((result) => console.log(result))
         .catch(err => console.log(err))
@@ -50,14 +64,20 @@ class Refer extends Component {
                                 </TouchableOpacity>
                             </Left>
                             <Body>
-                                <Title style={{fontSize: (( Dimensions.get('window').height) * 0.024)}}>ATIKU'S VOTERS APP</Title>
-                            </Body>  
+                                <Title style={styles.title}>ATIKU'S VOTERS APP</Title>
+                            </Body>
+                            <Right>
+                                <TouchableOpacity onPress={() => Actions.pop()} style={styles.touchable} activeOpacity = {0.8}>
+                                    <Image source={require('../img/back.png')} style={styles.open}/>
+                                </TouchableOpacity>    
+                            </Right>  
                         </Header>
                         <Text style={styles.topic} > REFER A FRIEND </Text>
                         <Content style={styles.content}>
-                           <Text style={styles.subtopic}>Your Referral Link</Text>
-                           <Text style={styles.subtopic2}>vjcbhjb</Text>
-                           <Button onPress={() => this.writeToClipboard()} containerStyle={styles.butCont} style={styles.button}>Share</Button>
+                           <Text style={styles.subtopic}>Refer 5 friends and get Recharge Card free</Text>
+                           <Text style={styles.subtopic}>Your Referral Code</Text>
+                           <Text style={styles.subtopic2}>{this.state.text} | Referrals: {this.state.mycount} | Card Count: {this.state.cardCount}</Text>
+                           <Button onPress={() => this.writeToClipboard()} containerStyle={styles.butCont2} style={styles.button2}>Copy</Button>
                         </Content>
                         <Content style={styles.shareContent}>
                             <Image source={require('../img/icons-24.png')} style={styles.logo}/>
@@ -88,16 +108,21 @@ const styles = StyleSheet.create({
         alignSelf: 'center' 
     },
     button: {
-        marginTop: '4%',
         backgroundColor: '#5cb85c',
         color: '#fff',
-        padding: '12%'
+        padding: '6%'
 
       },
+      title: {
+        fontSize: (( Dimensions.get('window').height) * 0.024), 
+        position: 'absolute',
+        top: '-18%',
+        left: '25%'
+    },
       butCont: {
         marginTop: '20%',
         borderRadius: 5,
-        width: '85%',
+        width: '50%',
         alignSelf: 'center'
       },
       content: {
@@ -106,9 +131,11 @@ const styles = StyleSheet.create({
     },
     subtopic: {
         alignSelf: 'center',
-        fontSize:  (( Dimensions.get('window').height) * 0.023)
+        fontSize:  (( Dimensions.get('window').height) * 0.023),
+        color: '#000'
     },
     subtopic2: {
+        marginTop: '2%',
         fontSize:  (( Dimensions.get('window').height) * 0.023),
         alignSelf: 'center',
         color: '#008841'

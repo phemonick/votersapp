@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
-import { StyleProvider, Container, Header, Left, Body, Title, Icon, ListItem, Content } from 'native-base'
+import { StyleProvider, Container, Header, Left, Body, Title, Icon, ListItem, Content, Right } from 'native-base'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, TextInput, BackHandler, ToastAndroid, Keyboard, KeyboardAvoidingView } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import Button from 'react-native-button'
+import axios from 'axios'
+// import 'url-search-params-polyfill';
 
 class Campaign extends Component {
     constructor() {
         super()
         this.state = {
-            email: ''
+            email: '',
+            disabled: false
         }
     }
     componentDidMount() {
@@ -27,10 +30,32 @@ class Campaign extends Component {
         Actions.pop();
         return true;
       }
-      submitmail() {
-          Actions.home()
-          ToastAndroid.show('Thank you for joining the campaign', ToastAndroid.SHORT)
-      } 
+      submitmanifest() {
+        var params = new URLSearchParams();
+        params.append('email', this.state.email);
+        this.setState({disabled: true})
+        axios.post('http://api.atikuvotersapp.org/sendconfirm', params)
+        .then(response => {
+            if(response.data.status == 'true') {
+                this.setState({
+                    message: response.data.message
+                })
+                ToastAndroid.show('Thank you for Joining the Campaign', ToastAndroid.SHORT);
+                Actions.pop()
+                console.log(response)
+            }
+            else {
+                this.setState({
+                    message: response.data.message,
+                    disabled: false
+                })
+                ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+                
+            }
+            
+        })
+        .catch(err => ToastAndroid.show('Failed! Check internet connection', ToastAndroid.SHORT)) 
+  } 
     render() {
         return (
             
@@ -43,8 +68,13 @@ class Campaign extends Component {
                                 </TouchableOpacity>
                             </Left>
                             <Body>
-                                <Title style={{fontSize: (( Dimensions.get('window').height) * 0.024)}}>ATIKU'S VOTERS APP</Title>
-                            </Body>  
+                                <Title style={styles.title}>ATIKU'S VOTERS APP</Title>
+                            </Body>
+                            <Right>
+                                <TouchableOpacity onPress={() => Actions.pop()} style={styles.touchable} activeOpacity = {0.8}>
+                                    <Image source={require('../img/back.png')} style={styles.open}/>
+                                </TouchableOpacity>    
+                            </Right>    
                         </Header>
                         <Text style={styles.topic} > JOIN THE CAMPAIGN </Text>
                         <Content style={styles.content}>
@@ -59,7 +89,11 @@ class Campaign extends Component {
                             placeholder={'Email Address'}
                             multiline={false}
                         />
-                           <Button onPress={() => this.submitmail()} containerStyle={styles.butCont} style={styles.button}>Submit</Button>
+                           <Button onPress={() => this.submitmail()}  
+                            containerStyle={styles.butCont} 
+                            styleDisabled={{backgroundColor: '#999', opacity: 0.5}}
+                            disabled={this.state.disabled}
+                            style={styles.button}>Join</Button>
                         </Content>
                     </Container>
                 </StyleProvider>
@@ -93,6 +127,12 @@ const styles = StyleSheet.create({
         borderBottomColor:'#fff',
         alignSelf: 'center'
       },
+      title: {
+        fontSize: (( Dimensions.get('window').height) * 0.024), 
+        position: 'absolute',
+        top: '-18%',
+        left: '26%'
+    },
     button: {
         marginTop: '4%',
         backgroundColor: '#5cb85c',

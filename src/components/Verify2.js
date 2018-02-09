@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, ImageBackground, AsyncStorage, TextInput, TouchableOpacity, Dimensions, Picker, BackHandler, KeyboardAvoidingView, ToastAndroid } from 'react-native'
+import { View, Text, Image, StyleSheet, ImageBackground, AsyncStorage, TextInput, TouchableOpacity, BackHandler, Dimensions, Picker,  KeyboardAvoidingView, ToastAndroid } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import Button from 'react-native-button'
 import CodeInput from 'react-native-confirmation-code-input';
@@ -35,28 +35,14 @@ export default class Verify extends Component{
     }
          
 
-    componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
-        }
-      componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
-      }
-
-       onBackPress () {
-        if (Actions.state.index === 0) {
-          return false;
-        }
-
-        Actions.pop();
-        return true;
-      }
+    
       async verify(code) {
           console.log("called", code, this.props.data)
         //   this.store("this.props.data")
         var params = new URLSearchParams();
         params.append('user_id', this.props.data.id);
         params.append('token', code);
-        axios.post('http://api.atikuvotersapp.org/verifytoken', params)
+        axios.post('http://api.atikuvotersapp.org/reverifytoken', params)
         .then(response => {
             console.log({VerifyRes:response})
             if(response.data.status !== 'false') {
@@ -75,7 +61,7 @@ export default class Verify extends Component{
         var params = new URLSearchParams();
         params.append('user_id', this.props.data.id);
         this.setState({disabled: true})
-        axios.post('http://api.atikuvotersapp.org/resendverificationcode', params)
+        axios.put('http://api.atikuvotersapp.org/resendverificationcode', params)
         .then(response => {
             if(response.data.status !== 'false') {
                 ToastAndroid.show('Code has been sent', ToastAndroid.SHORT);
@@ -101,9 +87,9 @@ export default class Verify extends Component{
                     <View style={ styles.code  }> 
                         <CodeInput
                             ref="codeInputRef1"
-                            keyboardType="numeric"
                             secureTextEntry
                             className={'border-b'}
+                            keyboardType="numeric"
                             codeLength={5}
                             space={5}
                             cellBorderWidth={3}
@@ -120,10 +106,10 @@ export default class Verify extends Component{
                     </View>
                 </View>
                     <View style={styles.buttonContainer}>
-                        <Button onPress={() => this.resend()} containerStyle={styles.butCont}
+                        <Button onPress={() => this.resend()} 
                          styleDisabled={{backgroundColor: '#999', opacity: 0.5}}
                          disabled={this.state.disabled}
-                        style={styles.button}>Resend Code</Button>                 
+                         containerStyle={styles.butCont} style={styles.button}>Resend Code</Button>                 
                     </View>
                         
             </KeyboardAvoidingView>

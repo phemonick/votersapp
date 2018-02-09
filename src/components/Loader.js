@@ -7,7 +7,8 @@ import React, { Component } from 'react'
      constructor() {
          super()
          this.state={
-             condition: false
+             condition: false,
+             userdata: {} 
          }
      
      }
@@ -16,7 +17,7 @@ import React, { Component } from 'react'
          setTimeout(()=>{
              // Add your logic for the transition
              if(this.state.condition){
-                 Actions.home()
+                 Actions.home({data: this.state.userdata})
              }
              else{
                  Actions.login()
@@ -34,8 +35,11 @@ import React, { Component } from 'react'
              if (value !== null){
                  // We have data!!
                  console.log(value);
+                 let data = JSON.parse(value)
+                 console.log({DataWeParsed: data})
                  this.setState({
-                     condition: true
+                     condition: true,
+                     userdata: data
                      
                  })
                }
@@ -76,4 +80,3 @@ import React, { Component } from 'react'
         
      },
  })
- 

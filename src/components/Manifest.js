@@ -8,6 +8,7 @@ import { Actions } from 'react-native-router-flux'
 import Button from 'react-native-button'
 import axios from 'axios'
 
+
 class Manifest extends Component {
     constructor() {
         super()
@@ -15,7 +16,8 @@ class Manifest extends Component {
             checked: false,
             checked2: false,
             checked3: false,
-            other: ''
+            other: '',
+            disabled: false
         }
     }
     componentDidMount() {
@@ -53,7 +55,8 @@ class Manifest extends Component {
         params.append('jobs', this.state.checked);
         params.append('business', this.state.checked2);
         params.append('others', this.state.other);
-        params.append('user_id', '60');
+        params.append('user_id', this.props.data.id);
+        this.setState({disabled: true})
         axios.post('http://api.atikuvotersapp.org/addmanifest', params)
         .then(response => {
             if(response.data.status == 'true') {
@@ -62,13 +65,15 @@ class Manifest extends Component {
                 })
                 console.log(this.state.id)
                 ToastAndroid.show('Done', ToastAndroid.SHORT);
-                Actions.home()
+                Actions.pop()
                 console.log(response)
             }
             else {
                 this.setState({
-                    message: response.data.message
+                    message: response.data.message,
+                    disabled: false
                 })
+                ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
                 
             }
             
@@ -76,6 +81,7 @@ class Manifest extends Component {
         .catch(err => ToastAndroid.show('Failed! Check internet connection', ToastAndroid.SHORT)) 
   }
     render() {
+        console.log(this.props.data.id)
         return (
                 <StyleProvider style={getTheme(material)}>
                     <Container style={styles.container}>
@@ -86,44 +92,51 @@ class Manifest extends Component {
                                 </TouchableOpacity>
                             </Left>
                             <Body>
-                                <Title style={{fontSize: (( Dimensions.get('window').height) * 0.024)}}>ATIKU'S VOTERS APP</Title>
-                            </Body>  
+                                <Title style={styles.title}>ATIKU'S VOTERS APP</Title>
+                            </Body> 
+                            <Right>
+                                <TouchableOpacity onPress={() => Actions.pop()} style={styles.touchable} activeOpacity = {0.8}>
+                                    <Image source={require('../img/back.png')} style={styles.open}/>
+                                </TouchableOpacity>    
+                            </Right> 
                         </Header>
                         <Text style={styles.topic} > ADD YOUR MANIFEST </Text>
                         <Content>
                             <ListItem>
-                                <CheckBox value={this.state.checked} 
+                                <CheckBox style={styles.checkbox}value={this.state.checked} 
                                 onChange={() => this.changeCheckValue()}/>
                                 <Body>
-                                <Text>Job Creation</Text>
+                                <Text style={styles.checks}>Job Creation</Text>
                                 </Body>
                             </ListItem>
                             <ListItem>
-                                <CheckBox value={this.state.checked2} 
+                                <CheckBox  style={styles.checkbox} value={this.state.checked2} 
                                 onChange={() => this.changeCheckValue2()}/>
                                 <Body>
-                                <Text>Business Financing</Text>
+                                <Text style={styles.checks}>Business Financing</Text>
                                 </Body>
                             </ListItem>
                             <ListItem>
-                                <CheckBox value={this.state.checked3} 
+                                <CheckBox  style={styles.checkbox}  value={this.state.checked3} 
                                 onChange={() => this.changeCheckValue3()}/>
                                 <Body>
-                                <Text>Others</Text>
+                                <Text style={styles.checks}>Others</Text>
                                 </Body>
                             </ListItem>
                                 <TextInput
-                                style={styles.input} 
                                 multiline = {true}
                                 numberOfLines = {8}
                                 onChangeText={(other) => this.setState({other})}
                                 underlineColorAndroid={'transparent'}
                                 style= { styles.input }
-                
+                                placeholderTextColor={'#000'}
                                 placeholder = { 'Additional information'}
                             />
                             <Content style={styles.content}>
-                                <Button onPress={() => this.submitmanifest()} containerStyle={styles.butCont} style={styles.button}>Submit</Button>
+                                <Button onPress={() => this.submitmanifest()} 
+                                 styleDisabled={{backgroundColor: '#999', opacity: 0.5}}
+                                 disabled={this.state.disabled}
+                                containerStyle={styles.butCont} style={styles.button}>Submit</Button>
                             </Content>
                             
                             </Content>
@@ -149,11 +162,22 @@ const styles = StyleSheet.create({
         marginLeft: '4%'
 
     },
+    title: {
+        fontSize: (( Dimensions.get('window').height) * 0.024), 
+        position: 'absolute',
+        top: '-18%',
+        left: '26%'
+    },
+    
     topic: {
         color: '#008841',
         fontSize: (( Dimensions.get('window').height) * 0.025),
         marginTop: '5%',
         alignSelf: 'center' 
+    },
+    checks: {
+        color: '#000',
+        marginLeft: '1%'
     },
     box:{
         flex: 1,
@@ -165,6 +189,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     input: {
+        color: '#000',
         marginTop: '3%',
         borderWidth: 1,
         borderColor: '#999',
@@ -196,6 +221,9 @@ const styles = StyleSheet.create({
         opacity: 0,
         position: 'absolute',
         bottom: -200
+    },
+    checkbox: {
+        backgroundColor: '#999'
     }
 
 

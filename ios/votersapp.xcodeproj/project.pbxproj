@@ -52,8 +52,7 @@
 		7B8C78EC71BB4F36A8BAB231 /* libRCTYouTube.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E0DCB6A7D7974EADB5CEB00A /* libRCTYouTube.a */; };
 		DDC3B3F19D8A45D1A2ABB7FD /* libRNDocumentPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BCBF3D4E24148958E0754AD /* libRNDocumentPicker.a */; };
 		90501EB02CEF489B82746574 /* libRNAdMobManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BDDE92BD728419DAC4BC351 /* libRNAdMobManager.a */; };
-		9054161DA16C40059CF2E345 /* libRCTOneSignal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDC27A2C444B453D9B5102D2 /* libRCTOneSignal.a */; };
-		48ED289820ED49B5B657D50E /* libRNBackgroundTimer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C94DCD6A8E0E42C1AB8E21FF /* libRNBackgroundTimer.a */; };
+		C1A7B33AD5DE4DA6A763388E /* libRNBackgroundTimer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3063B2E55D8C4DBCAE5407A1 /* libRNBackgroundTimer.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -323,10 +322,8 @@
 		1BCBF3D4E24148958E0754AD /* libRNDocumentPicker.a */ = {isa = PBXFileReference; name = "libRNDocumentPicker.a"; path = "libRNDocumentPicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		0D1064C5F90349FFAF09A69B /* RNAdMobManager.xcodeproj */ = {isa = PBXFileReference; name = "RNAdMobManager.xcodeproj"; path = "../node_modules/react-native-admob/ios/RNAdMobManager.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		4BDDE92BD728419DAC4BC351 /* libRNAdMobManager.a */ = {isa = PBXFileReference; name = "libRNAdMobManager.a"; path = "libRNAdMobManager.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		095F9F151D7841E787C7D3A1 /* RCTOneSignal.xcodeproj */ = {isa = PBXFileReference; name = "RCTOneSignal.xcodeproj"; path = "../node_modules/react-native-onesignal/ios/RCTOneSignal.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		CDC27A2C444B453D9B5102D2 /* libRCTOneSignal.a */ = {isa = PBXFileReference; name = "libRCTOneSignal.a"; path = "libRCTOneSignal.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		FCA33CB5E8B641E1A7E17DCE /* RNBackgroundTimer.xcodeproj */ = {isa = PBXFileReference; name = "RNBackgroundTimer.xcodeproj"; path = "../node_modules/react-native-background-timer/ios/RNBackgroundTimer.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		C94DCD6A8E0E42C1AB8E21FF /* libRNBackgroundTimer.a */ = {isa = PBXFileReference; name = "libRNBackgroundTimer.a"; path = "libRNBackgroundTimer.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		480CEBC6C27C4D08A81B8834 /* RNBackgroundTimer.xcodeproj */ = {isa = PBXFileReference; name = "RNBackgroundTimer.xcodeproj"; path = "../node_modules/react-native-background-timer/ios/RNBackgroundTimer.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		3063B2E55D8C4DBCAE5407A1 /* libRNBackgroundTimer.a */ = {isa = PBXFileReference; name = "libRNBackgroundTimer.a"; path = "libRNBackgroundTimer.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -359,8 +356,7 @@
 				7B8C78EC71BB4F36A8BAB231 /* libRCTYouTube.a in Frameworks */,
 				DDC3B3F19D8A45D1A2ABB7FD /* libRNDocumentPicker.a in Frameworks */,
 				90501EB02CEF489B82746574 /* libRNAdMobManager.a in Frameworks */,
-				9054161DA16C40059CF2E345 /* libRCTOneSignal.a in Frameworks */,
-				48ED289820ED49B5B657D50E /* libRNBackgroundTimer.a in Frameworks */,
+				C1A7B33AD5DE4DA6A763388E /* libRNBackgroundTimer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,8 +538,7 @@
 				9DA875A594764C46B91123CD /* RCTYouTube.xcodeproj */,
 				A6CADA2E8A8846AA82D428A2 /* RNDocumentPicker.xcodeproj */,
 				0D1064C5F90349FFAF09A69B /* RNAdMobManager.xcodeproj */,
-				095F9F151D7841E787C7D3A1 /* RCTOneSignal.xcodeproj */,
-				FCA33CB5E8B641E1A7E17DCE /* RNBackgroundTimer.xcodeproj */,
+				480CEBC6C27C4D08A81B8834 /* RNBackgroundTimer.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1147,7 +1142,6 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/votersapp.app/votersapp";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1155,7 +1149,6 @@
 					"$(SRCROOT)\..\node_modules\react-native-youtube/**",
 					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
 					"$(SRCROOT)\..\node_modules\react-native-admob\ios",
-					"$(SRCROOT)\..\node_modules\react-native-onesignal\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-background-timer\ios",
 				);
 			};
@@ -1177,7 +1170,6 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/votersapp.app/votersapp";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1185,7 +1177,6 @@
 					"$(SRCROOT)\..\node_modules\react-native-youtube/**",
 					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
 					"$(SRCROOT)\..\node_modules\react-native-admob\ios",
-					"$(SRCROOT)\..\node_modules\react-native-onesignal\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-background-timer\ios",
 				);
 			};
@@ -1212,7 +1203,6 @@
 					"$(SRCROOT)\..\node_modules\react-native-youtube/**",
 					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
 					"$(SRCROOT)\..\node_modules\react-native-admob\ios",
-					"$(SRCROOT)\..\node_modules\react-native-onesignal\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-background-timer\ios",
 				);
 			};
@@ -1238,7 +1228,6 @@
 					"$(SRCROOT)\..\node_modules\react-native-youtube/**",
 					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
 					"$(SRCROOT)\..\node_modules\react-native-admob\ios",
-					"$(SRCROOT)\..\node_modules\react-native-onesignal\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-background-timer\ios",
 				);
 			};
@@ -1269,7 +1258,6 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1277,7 +1265,6 @@
 					"$(SRCROOT)\..\node_modules\react-native-youtube/**",
 					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
 					"$(SRCROOT)\..\node_modules\react-native-admob\ios",
-					"$(SRCROOT)\..\node_modules\react-native-onesignal\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-background-timer\ios",
 				);
 			};
@@ -1308,7 +1295,6 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1316,7 +1302,6 @@
 					"$(SRCROOT)\..\node_modules\react-native-youtube/**",
 					"$(SRCROOT)\..\node_modules\react-native-document-picker\ios\RNDocumentPicker",
 					"$(SRCROOT)\..\node_modules\react-native-admob\ios",
-					"$(SRCROOT)\..\node_modules\react-native-onesignal\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-background-timer\ios",
 				);
 			};
@@ -1342,7 +1327,6 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -1367,7 +1351,6 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Release;

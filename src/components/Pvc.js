@@ -87,8 +87,13 @@ class Pvc extends Component {
                                 </TouchableOpacity>
                             </Left>
                             <Body>
-                                <Title style={{fontSize: (( Dimensions.get('window').height) * 0.024)}}>ATIKU'S VOTERS APP</Title>
-                            </Body>  
+                                <Title style={styles.title}>ATIKU'S VOTERS APP</Title>
+                            </Body>
+                            <Right>
+                                <TouchableOpacity onPress={() => Actions.pop()} style={styles.touchable} activeOpacity = {0.8}>
+                                    <Image source={require('../img/back.png')} style={styles.open}/>
+                                </TouchableOpacity>    
+                            </Right>  
                         </Header>
                         <Text style={styles.topic} > GETTING YOUR PVC </Text>
                         <Content>
@@ -136,6 +141,12 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: '10%'
     },
+    title: {
+        fontSize: (( Dimensions.get('window').height) * 0.024), 
+        position: 'absolute',
+        top: '-18%',
+        left: '26%'
+    },
     img: {
         width: 80,
         height: 80,
@@ -145,12 +156,15 @@ const styles = StyleSheet.create({
 
     },
     info: {
+        color: '#000',
         marginTop: '15%',
         fontSize: (( Dimensions.get('window').height) * 0.026)
     },
     subinfo: {
+        color: '#000',
         fontSize: (( Dimensions.get('window').height) * 0.018),
-        marginTop: '1%'
+        marginTop: '1%',
+        marginLeft: '1%'
     },
     banner: {
         opacity: 0,

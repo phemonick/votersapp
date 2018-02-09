@@ -4,19 +4,35 @@ import { StyleProvider, Container, Header, Left, Body, Title, Right, ListItem, C
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import Button from 'react-native-button'
-import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, CheckBox, TextInput, ToastAndroid } from 'react-native'
+import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, CheckBox, TextInput, ToastAndroid, BackHandler } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import StarRating from 'react-native-star-rating'
 import axios from 'axios'
+// import 'url-search-params-polyfill';
 
 
 class Rate extends Component {
     constructor() {
         super()
         this.state = {
-            starCount: 0
+            starCount: 0,
+            disabled: false
         }
     }
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+        }
+      componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+      }
+       onBackPress () {
+        if (Actions.state.index === 0) {
+          return false;
+        }
+
+        Actions.pop();
+        return true;
+      }
     
     onStarRatingPress(rating) {
         this.setState({
@@ -27,7 +43,8 @@ class Rate extends Component {
 
         var params = new URLSearchParams();
         params.append('rate', this.state.starCount);
-        params.append('user_id', '60');
+        params.append('user_id', this.props.data.id);
+        this.setState({disabled: true})
         axios.post('http://api.atikuvotersapp.org/rate', params)
         .then(response => {
             if(response.data.status == 'true') {
@@ -36,13 +53,16 @@ class Rate extends Component {
                 })
                 console.log(this.state.id)
                 ToastAndroid.show('Rated', ToastAndroid.SHORT);
-                Actions.home()
+                Actions.pop()
                 console.log(response)
             }
             else {
                 this.setState({
-                    message: response.data.message
+                    message: response.data.message,
+                    disabled: false
                 })
+                ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+
                 
             }
             
@@ -62,8 +82,13 @@ class Rate extends Component {
                             </TouchableOpacity>
                         </Left>
                         <Body>
-                            <Title style={{fontSize: (( Dimensions.get('window').height) * 0.024)}}>ATIKU'S VOTERS APP</Title>
-                        </Body>  
+                            <Title style={styles.title}>ATIKU'S VOTERS APP</Title>
+                        </Body>
+                        <Right>
+                            <TouchableOpacity onPress={() => Actions.pop()} style={styles.touchable} activeOpacity = {0.8}>
+                                <Image source={require('../img/back.png')} style={styles.open}/>
+                            </TouchableOpacity>    
+                        </Right>  
                     </Header>
                     <Text style={styles.topic}> RATE ATIKU </Text>
                     <Image style={styles.image} source={require('../img/atiku.jpg')} />
@@ -80,7 +105,10 @@ class Rate extends Component {
                         />
                     </View>
                     <Content style={styles.content}>
-                        <Button onPress={() =>this.submitrate()} containerStyle={styles.butCont} style={styles.button}>Rate</Button>
+                        <Button onPress={() =>this.submitrate()}
+                         styleDisabled={{backgroundColor: '#999', opacity: 0.5}}
+                         disabled={this.state.disabled} 
+                        containerStyle={styles.butCont} style={styles.button}>Rate</Button>
                     </Content>
                     <AdMobBanner
                         style={styles.banner}
@@ -113,6 +141,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center'
         
+    },
+    title: {
+        fontSize: (( Dimensions.get('window').height) * 0.024), 
+        position: 'absolute',
+        top: '-18%',
+        left: '26%'
     },
     check: {
         display: 'flex',
