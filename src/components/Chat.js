@@ -4,7 +4,7 @@ import { StyleProvider, Container, Header, Left, Right, Body, Title} from 'nativ
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import BackgroundTimer from 'react-native-background-timer'
-import { GiftedChat } from 'react-native-gifted-chat';
+import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 window.navigator.userAgent = 'react-native'
  const io = require('react-native-socket.io-client/socket.io');
 import axios from 'axios'
@@ -112,6 +112,17 @@ class Chat extends React.Component {
     this.socket.emit('msgadmin', data);
     this._storeMessages(messages);
   }
+
+  renderBubble(props) { return ( <Bubble {...props} 
+    wrapperStyle={{
+        left: {
+          backgroundColor: '#00E640',
+        },
+        right: {
+          backgroundColor: '#26A65B'
+        }
+      }} />
+    )}
   
 
   render() {
@@ -146,6 +157,9 @@ class Chat extends React.Component {
           textInputProps={{
             style: styles.chatT
           }}
+          isAnimated = {true}
+          renderBubble={this.renderBubble.bind(this)}
+          
         />
     </Container>
   </StyleProvider>
