@@ -16,12 +16,7 @@ import React, { Component } from 'react'
          this.checkToken();
          setTimeout(()=>{
              // Add your logic for the transition
-             if(this.state.condition){
                  Actions.home({data: this.state.userdata})
-             }
-             else{
-                 Actions.login()
-             }
              
         }, 500)
      }

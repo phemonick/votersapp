@@ -4,7 +4,7 @@ import { StyleProvider, Container, Header, Left, Body, Title, Right, Content } f
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, CheckBox, TextInput, BackHandler, Alert, Platform } from 'react-native'
+import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, BackHandler, Alert, Platform } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import Button from 'react-native-button'
 import * as Progress from 'react-native-progress';
@@ -112,7 +112,7 @@ class Pvc extends Component {
                         <AdMobBanner
                             style={styles.banner}
                             adSize="fullBanner"
-                            adUnitID="ca-app-pub-6762059104295133/9532278899"
+                            adUnitID="ca-app-pub-6559209856638953/7836208719"
                         />
                     </Container>
                 </StyleProvider>

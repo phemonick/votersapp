@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
- import { View, Text, Image, StyleSheet, ImageBackground, TextInput, Keyboard, TouchableOpacity, Dimensions, Picker, ToastAndroid, BackHandler} from 'react-native'
+ import { View, Text, Image, StyleSheet, ImageBackground, TextInput, Keyboard, TouchableOpacity, Dimensions, ToastAndroid, BackHandler} from 'react-native'
  import { Container, Header, Content, Form, Item, Input, Label } from 'native-base';
  import Button from 'react-native-button'
  import { Actions } from 'react-native-router-flux'
  import DatePicker from 'react-native-datepicker'
-//  import 'url-search-params-polyfill';
+ import 'url-search-params-polyfill';
  import axios from 'axios'
  
  export default class Login extends Component{
@@ -45,7 +45,6 @@ import React, { Component } from 'react';
                 })
                 console.log(response.data.details)
                 Actions.verify2({data: this.state})
-                console.log(response)
             }
             else {
                 this.setState({
@@ -65,33 +64,33 @@ import React, { Component } from 'react';
      render(){
          console.log(this.state)
          return(
-             <ImageBackground source={require('../img/bg-32.png')} style={styles.bgImg} >
-             <View style={styles.container}>
-                 <Image source={require('../img/icons-24.png')} style={styles.logo}/>
-                 <View style={ styles.bottom  } >
-                         <TextInput
-                             style={styles.input}
-                             placeholderTextColor= {'#fff'}
-                             onChangeText={(text) => this.setState({mobile: text})}
-                             onSubmitEditing={Keyboard.dismiss}
-                             fontSize= {18}
-                             fontFamily= 'Roboto'
-                             keyboardType = 'numeric'
-                             placeholder={'Phone Number'}
-                             underlineColorAndroid={'#fff'}
-                             multiline={false}
-                         />
-                    <View style={styles.buttonContainer}>
-                         <Button onPress={() => this.signin()} 
-                            containerStyle={styles.butCont} 
-                            style={styles.button}
-                            styleDisabled={{backgroundColor: '#999', opacity: 0.5}}
-                            disabled={this.state.disabled}
-                         >Verify</Button>
-                     </View>
-                 </View>
-             </View>
-             </ImageBackground>
+            <ImageBackground source={require('../img/bg-32.png')} style={styles.bgImg} >
+                <View style={styles.container}>
+                <Image source={require('../img/icons-24.png')} style={styles.logo}/>
+                    <View style={ styles.bottom }>
+                        <TextInput
+                            style={styles.input}
+                            placeholderTextColor= {'#fff'}
+                            onChangeText={(text) => this.setState({mobile: text})}
+                            onSubmitEditing={Keyboard.dismiss}
+                            fontSize= {18}
+                            fontFamily= 'Roboto'
+                            keyboardType = 'numeric'
+                            placeholder={'Phone Number'}
+                            underlineColorAndroid={'#fff'}
+                            multiline={false}
+                        />
+                        <View style={styles.buttonContainer}>
+                            <Button onPress={() => this.signin()} 
+                                containerStyle={styles.butCont} 
+                                style={styles.button}
+                                styleDisabled={{backgroundColor: '#999', opacity: 0.5}}
+                                disabled={this.state.disabled}
+                            >Verify</Button>
+                        </View>
+                    </View>
+                </View>
+            </ImageBackground>
          )
      }
  }
@@ -121,7 +120,7 @@ import React, { Component } from 'react';
      },
      input: {
          marginTop: '8%',
-         width: '80%',
+         width: '60%',
          color: '#eee',
          textAlign: 'center',
          

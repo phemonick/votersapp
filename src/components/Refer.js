@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import { StyleProvider, Container, Header, Left, Body, Title, Right, Icon, ListItem, Content } from 'native-base'
+import { StyleProvider, Container, Header, Left, Body, Title, Right, Icon,  Content } from 'native-base'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
-import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, CheckBox, TextInput, BackHandler, Clipboard, AsyncStorage, ToastAndroid } from 'react-native'
+import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View,  BackHandler, Clipboard, AsyncStorage, ToastAndroid, Share } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import Button from 'react-native-button'
-import { Share } from 'react-native'
 import axios from 'axios'
 
 class Refer extends Component {
@@ -74,7 +73,7 @@ class Refer extends Component {
                         </Header>
                         <Text style={styles.topic} > REFER A FRIEND </Text>
                         <Content style={styles.content}>
-                           <Text style={styles.subtopic}>Refer 5 friends and get Recharge Card free</Text>
+                           <Text style={styles.subtopic}>Refer 5 friends and get Recharge Card free.</Text>
                            <Text style={styles.subtopic}>Your Referral Code</Text>
                            <Text style={styles.subtopic2}>{this.state.text} | Referrals: {this.state.mycount} | Card Count: {this.state.cardCount}</Text>
                            <Button onPress={() => this.writeToClipboard()} containerStyle={styles.butCont2} style={styles.button2}>Copy</Button>

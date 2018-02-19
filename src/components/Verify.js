@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, ImageBackground, AsyncStorage, TextInput, TouchableOpacity, Dimensions, Picker, BackHandler, KeyboardAvoidingView, ToastAndroid } from 'react-native'
+import { View, Text, Image, StyleSheet, ImageBackground, AsyncStorage, Dimensions, BackHandler, KeyboardAvoidingView, ToastAndroid } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import Button from 'react-native-button'
 import CodeInput from 'react-native-confirmation-code-input';
 import axios from 'axios'
-// import 'url-search-params-polyfill';
+import 'url-search-params-polyfill';
 
 export default class Verify extends Component{
     constructor() {
@@ -91,42 +91,41 @@ export default class Verify extends Component{
     render(){
 
         return(
-
             <ImageBackground source={require('../img/bg-32.png')} style={styles.bgImg} >
-            <KeyboardAvoidingView style={styles.container}>
-                <Image source={require('../img/icons-24.png')} style={styles.logo}/>
-                <View style={ styles.bottom  } >
-                <Text style = {styles.instruction}> Verify Your Phone Number </Text> 
-                <Text style = {styles.instruction}> Enter Five Digit Code</Text>
-                    <View style={ styles.code  }> 
-                        <CodeInput
-                            ref="codeInputRef1"
-                            keyboardType="numeric"
-                            secureTextEntry
-                            className={'border-b'}
-                            codeLength={5}
-                            space={5}
-                            cellBorderWidth={3}
-                            size={30}
-                            autoFocus={false}
-                            inputPosition='left'
-                            onFulfill={(code) => {
-                                this.setState({
-                                    token: code
-                                })
-                                this.verify(code)
-                            }}
-                        />
+                <KeyboardAvoidingView style={styles.container}>
+                    <Image source={require('../img/icons-24.png')} style={styles.logo}/>
+                    <View style={ styles.bottom  } >
+                    <Text style = {styles.instruction}> Verify Your Phone Number </Text> 
+                    <Text style = {styles.instruction}> Enter Five Digit Code</Text>
+                        <View style={ styles.code  }> 
+                            <CodeInput
+                                ref="codeInputRef1"
+                                keyboardType="numeric"
+                                secureTextEntry
+                                className={'border-b'}
+                                codeLength={5}
+                                space={5}
+                                cellBorderWidth={3}
+                                size={30}
+                                autoFocus={false}
+                                inputPosition='left'
+                                onFulfill={(code) => {
+                                    this.setState({
+                                        token: code
+                                    })
+                                    this.verify(code)
+                                }}
+                            />
+                        </View>
                     </View>
-                </View>
-                    <View style={styles.buttonContainer}>
-                        <Button onPress={() => this.resend()} containerStyle={styles.butCont}
-                         styleDisabled={{backgroundColor: '#999', opacity: 0.5}}
-                         disabled={this.state.disabled}
-                        style={styles.button}>Resend Code</Button>                 
-                    </View>
-                        
-            </KeyboardAvoidingView>
+                        <View style={styles.buttonContainer}>
+                            <Button onPress={() => this.resend()} containerStyle={styles.butCont}
+                            styleDisabled={{backgroundColor: '#999', opacity: 0.5}}
+                            disabled={this.state.disabled}
+                            style={styles.button}>Resend Code</Button>                 
+                        </View>
+                            
+                </KeyboardAvoidingView>
             </ImageBackground>
         )
     }

@@ -6,7 +6,7 @@ import { Actions } from 'react-native-router-flux'
 import DatePicker from 'react-native-datepicker'
 import data  from './StateData'
 import axios from 'axios'
-// import 'url-search-params-polyfill';
+import 'url-search-params-polyfill';
 
 export default class Login extends Component{
     constructor(){
@@ -37,39 +37,37 @@ export default class Login extends Component{
        BackHandler.exitApp()
       }
       signup() {
-          Actions.home()
-        // Actions.verify({data: this.state})
-        // var params = new URLSearchParams();
-        // params.append('name', this.state.name);
-        // params.append('gender', this.state.gender);
-        // params.append('email', this.state.email);
-        // params.append('state', this.state.state);
-        // params.append('mobile', this.state.mobile);
-        // params.append('dob', this.state.dob);
-        // params.append('upline', this.state.upline);
-        // this.setState({disabled: true})
-        // axios.post('http://api.atikuvotersapp.org/addusers', params)
-        // .then(response => {
-        //     if(response.data.status == 'true') {
-        //         this.setState({
-        //             id: response.data.details
-        //         })
-        //         console.log(this.state.id)
-        //         Actions.verify({data: this.state})
-        //         console.log(response)
-        //     }
-        //     else {
-        //         this.setState({
-        //             message: response.data.message,
-        //             disabled: false
-        //         })
-        //         ToastAndroid.show(response.data.message, ToastAndroid.SHORT)
-        //         console.log({else:response})
+        var params = new URLSearchParams();
+        params.append('name', this.state.name);
+        params.append('gender', this.state.gender);
+        params.append('email', this.state.email);
+        params.append('state', this.state.state);
+        params.append('mobile', this.state.mobile);
+        params.append('dob', this.state.dob);
+        params.append('upline', this.state.upline);
+        this.setState({disabled: true})
+        axios.post('http://api.atikuvotersapp.org/addusers', params)
+        .then(response => {
+            if(response.data.status == 'true') {
+                this.setState({
+                    id: response.data.details
+                })
+                console.log(this.state.id)
+                Actions.verify({data: this.state})
+                console.log(response)
+            }
+            else {
+                this.setState({
+                    message: response.data.message,
+                    disabled: false
+                })
+                ToastAndroid.show(response.data.message, ToastAndroid.SHORT)
+                console.log({else:response})
 
-        //     }
+            }
             
-        // })
-        // .catch(err => console.log(err)) 
+        })
+        .catch(err => console.log(err)) 
 
       }
     render(){
@@ -80,11 +78,10 @@ export default class Login extends Component{
         })
         return(
             <ImageBackground source={require('../img/bg-32.png')} style={styles.bgImg} >
-
-            <View style={styles.container}>
-                <Image source={require('../img/icons-24.png')} style={styles.logo}/>
-                <ScrollView>
-                    <TextInput
+                <View style={styles.container}>
+                    <Image source={require('../img/icons-24.png')} style={styles.logo}/>
+                    <ScrollView>
+                        <TextInput
                             style={styles.input}
                             placeholderTextColor= {'#fff'}
                             fontFamily= 'Roboto'
@@ -93,7 +90,7 @@ export default class Login extends Component{
                             underlineColorAndroid={'#fff'}
                             placeholder={'Name'}
                             multiline={false}
-                        />
+                            />
                         <TextInput
                             style={styles.input}
                             placeholderTextColor= {'#fff'}
@@ -126,73 +123,73 @@ export default class Login extends Component{
                             placeholder={'Referral code if any'}
                             multiline={false}
                         />
-                    <View style={[styles.gender]} >
-                        <Picker
-                            selectedValue={this.state.gender} 
-                            mode='dialog'
-                            onValueChange={(itemValue, itemIndex) => this.setState({gender: itemValue})}>
-                            <Picker.Item  color='#fff' label="Gender" value="Gender" />
-                            <Picker.Item color='#fff' label="Male" value="Male" />
-                            <Picker.Item color='#fff' label="Female" value="Female" />
-                        </Picker>
-                    </View>
-                    <View style={[styles.local]} >
-                        <Picker 
-                            selectedValue={this.state.state}
-                            style={styles.pick}
-                            mode='dialog'
-                            onValueChange={(itemValue, itemIndex) => this.setState({state: itemValue})}>
-                            <Picker.Item  color='#fff' label="State of Residence" value="State of Residence" />
-                            {items}
-                        </Picker>
-                    </View>
-                    <DatePicker
-                        style={styles.dob}
-                        date={this.state.dob}
-                        mode="date"
-                        placeholder="Date of Birth"
-                        format="YYYY-MM-DD"
-                        minDate="1950-05-01"
-                        maxDate="2000-01-01"
-                        androidMode="spinner"
-                        confirmBtnText="Confirm"
-                        cancelBtnText="Cancel"
-                        showIcon={false}
-                        customStyles={{
-                            placeholderText: {
-                                color: '#fff',
-                                fontSize: 16,
-                                alignSelf:'flex-start',
-                                paddingLeft:10
+                        <View style={[styles.gender]} >
+                            <Picker
+                                selectedValue={this.state.gender} 
+                                mode='dialog'
+                                onValueChange={(itemValue, itemIndex) => this.setState({gender: itemValue})}>
+                                <Picker.Item  color='#fff' label="Gender" value="Gender" />
+                                <Picker.Item color='#fff' label="Male" value="Male" />
+                                <Picker.Item color='#fff' label="Female" value="Female" />
+                            </Picker>
+                        </View>
+                        <View style={[styles.local]} >
+                            <Picker 
+                                selectedValue={this.state.state}
+                                style={styles.pick}
+                                mode='dialog'
+                                onValueChange={(itemValue, itemIndex) => this.setState({state: itemValue})}>
+                                <Picker.Item  color='#fff' label="State of Residence" value="State of Residence" />
+                                {items}
+                            </Picker>
+                        </View>
+                        <DatePicker
+                            style={styles.dob}
+                            date={this.state.dob}
+                            mode="date"
+                            placeholder="Date of Birth"
+                            format="YYYY-MM-DD"
+                            minDate="1950-05-01"
+                            maxDate="2000-01-01"
+                            androidMode="spinner"
+                            confirmBtnText="Confirm"
+                            cancelBtnText="Cancel"
+                            showIcon={false}
+                            customStyles={{
+                                placeholderText: {
+                                    color: '#fff',
+                                    fontSize: 16,
+                                    alignSelf:'flex-start',
+                                    paddingLeft:10
+                                },
+                            dateInput: {
+                                // marginLeft: 36,
+                                borderWidth: null,
+                                borderBottomWidth: 1,
+                                borderColor: '#fff'
                             },
-                        dateInput: {
-                            // marginLeft: 36,
-                            borderWidth: null,
-                            borderBottomWidth: 1,
-                            borderColor: '#fff'
-                        },
-                        dateText:{
-                            color: '#fff',
-                            justifyContent: 'flex-start'
-                          }
-                        // ... You can check the source to find the other keys.
-                        }}
-                        onDateChange={(date) => {this.setState({dob: date})}}
-                    />
-                    <Content>
-                        <Button onPress={() => {
-                            this.signup()}}
-                            containerStyle={styles.butCont}
-                            style={styles.button}
-                            styleDisabled={{backgroundColor: '#999', opacity: 0.5}}
-                            disabled={this.state.disabled}
-                           >Sign Up</Button>
-                    </Content>
-                    <Content>
-                        <Text style={styles.olduser}onPress={() => Actions.olduser()}>Already a user? Verify phone number here</Text>
-                    </Content>
-                </ScrollView>      
-            </View>
+                            dateText:{
+                                color: '#fff',
+                                justifyContent: 'flex-start'
+                            }
+                            // ... You can check the source to find the other keys.
+                            }}
+                            onDateChange={(date) => {this.setState({dob: date})}}
+                        />
+                        <Content>
+                            <Button onPress={() => {
+                                this.signup()}}
+                                containerStyle={styles.butCont}
+                                style={styles.button}
+                                styleDisabled={{backgroundColor: '#999', opacity: 0.5}}
+                                disabled={this.state.disabled}
+                            >Sign Up</Button>
+                        </Content>
+                        <Content>
+                            <Text style={styles.olduser}onPress={() => Actions.olduser()}>Already a user? Verify phone number here</Text>
+                        </Content>
+                    </ScrollView>      
+                </View>
             </ImageBackground>
         )
     }

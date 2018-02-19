@@ -5,8 +5,6 @@ import { Actions } from 'react-native-router-flux';
 import Button from 'react-native-button';
 import { Container, Content, List, ListItem } from 'native-base';
 
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -18,14 +16,12 @@ const styles = StyleSheet.create({
   link: {
     color: '#fff',
     fontSize: (( Dimensions.get('window').height) * 0.02),
-
   },
   close: {
     width:  (( Dimensions.get('window').height) * 0.018),
     height:  (( Dimensions.get('window').height) * 0.018),
     marginLeft: '92%',
-    marginTop: (( Dimensions.get('window').height) * 0.03)
-    
+    marginTop: (( Dimensions.get('window').height) * 0.03) 
   },
   logo: {
     width:  (( Dimensions.get('window').height) * 0.2),

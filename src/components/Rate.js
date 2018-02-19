@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { AdMobBanner } from 'react-native-admob'
-import { StyleProvider, Container, Header, Left, Body, Title, Right, ListItem, Content, Icon } from 'native-base'
+import { StyleProvider, Container, Header, Left, Body, Title, Right,  Content, Icon } from 'native-base'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import Button from 'react-native-button'
-import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, CheckBox, TextInput, ToastAndroid, BackHandler } from 'react-native'
+import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, ToastAndroid, BackHandler } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import StarRating from 'react-native-star-rating'
 import axios from 'axios'
-// import 'url-search-params-polyfill';
+import 'url-search-params-polyfill';
 
 
 class Rate extends Component {
@@ -43,7 +43,7 @@ class Rate extends Component {
 
         var params = new URLSearchParams();
         params.append('rate', this.state.starCount);
-        params.append('user_id', this.props.data.id);
+        params.append('user_id', this.props.data);
         this.setState({disabled: true})
         axios.post('http://api.atikuvotersapp.org/rate', params)
         .then(response => {
@@ -71,7 +71,7 @@ class Rate extends Component {
   }
     
     render() {
-        console.log(this.state)
+        console.log(this.props.data)
         return (
             <StyleProvider style={getTheme(material)}>
                 <Container style={styles.container}>
@@ -113,7 +113,7 @@ class Rate extends Component {
                     <AdMobBanner
                         style={styles.banner}
                         adSize="fullBanner"
-                        adUnitID="ca-app-pub-6762059104295133/2278914333"
+                        adUnitID="ca-app-pub-6559209856638953/5058481062"
                     />
                 </Container>
             </StyleProvider>

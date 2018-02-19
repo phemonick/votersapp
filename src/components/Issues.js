@@ -7,7 +7,7 @@ import Button from 'react-native-button'
 import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, CheckBox, TextInput, BackHandler, ToastAndroid } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import axios from 'axios'
-// import 'url-search-params-polyfill';
+import 'url-search-params-polyfill';
 
 class Issues extends Component {
     constructor() {
@@ -146,7 +146,7 @@ class Issues extends Component {
                         <AdMobBanner
                             style={styles.banner}
                             adSize="fullBanner"
-                            adUnitID="ca-app-pub-6762059104295133/4352963230"
+                            adUnitID="ca-app-pub-6559209856638953/9572441142"
                         />
                 </Container>
             </StyleProvider>

@@ -6,7 +6,7 @@ import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, TextInput,
 import { Actions } from 'react-native-router-flux'
 import Button from 'react-native-button'
 import axios from 'axios'
-// import 'url-search-params-polyfill';
+import 'url-search-params-polyfill';
 
 class Campaign extends Component {
     constructor() {
@@ -30,7 +30,7 @@ class Campaign extends Component {
         Actions.pop();
         return true;
       }
-      submitmanifest() {
+      submitmail() {
         var params = new URLSearchParams();
         params.append('email', this.state.email);
         this.setState({disabled: true})
@@ -58,28 +58,27 @@ class Campaign extends Component {
   } 
     render() {
         return (
-            
-                <StyleProvider style={getTheme(material)}>
-                    <Container style={styles.container}>
-                        <Header style={{ marginTop: (( Dimensions.get('window').height) * 0.024)}}>
-                            <Left>
-                                <TouchableOpacity onPress={() => Actions.drawerOpen()} style={styles.touchable} activeOpacity = {0.8}>
-                                    <Image source={require('../img/icons-02.png')} style={styles.open}/>
-                                </TouchableOpacity>
-                            </Left>
-                            <Body>
-                                <Title style={styles.title}>ATIKU'S VOTERS APP</Title>
-                            </Body>
-                            <Right>
-                                <TouchableOpacity onPress={() => Actions.pop()} style={styles.touchable} activeOpacity = {0.8}>
-                                    <Image source={require('../img/back.png')} style={styles.open}/>
-                                </TouchableOpacity>    
-                            </Right>    
-                        </Header>
-                        <Text style={styles.topic} > JOIN THE CAMPAIGN </Text>
-                        <Content style={styles.content}>
-                           <Text style={styles.subtopic}>Enter your email address to receive Newsletters</Text>
-                           <TextInput
+            <StyleProvider style={getTheme(material)}>
+                <Container style={styles.container}>
+                    <Header style={{ marginTop: (( Dimensions.get('window').height) * 0.024)}}>
+                        <Left>
+                            <TouchableOpacity onPress={() => Actions.drawerOpen()} style={styles.touchable} activeOpacity = {0.8}>
+                                <Image source={require('../img/icons-02.png')} style={styles.open}/>
+                            </TouchableOpacity>
+                        </Left>
+                        <Body>
+                            <Title style={styles.title}>ATIKU'S VOTERS APP</Title>
+                        </Body>
+                        <Right>
+                            <TouchableOpacity onPress={() => Actions.pop()} style={styles.touchable} activeOpacity = {0.8}>
+                                <Image source={require('../img/back.png')} style={styles.open}/>
+                            </TouchableOpacity>    
+                        </Right>    
+                    </Header>
+                    <Text style={styles.topic} > JOIN THE CAMPAIGN </Text>
+                    <Content style={styles.content}>
+                        <Text style={styles.subtopic}>Enter your email address to receive Newsletters</Text>
+                        <TextInput
                             style={styles.input}
                             placeholderTextColor= {'#ccc'}
                             fontFamily= 'Roboto'
@@ -88,15 +87,15 @@ class Campaign extends Component {
                             underlineColorAndroid={'#008841'}
                             placeholder={'Email Address'}
                             multiline={false}
-                        />
-                           <Button onPress={() => this.submitmail()}  
-                            containerStyle={styles.butCont} 
-                            styleDisabled={{backgroundColor: '#999', opacity: 0.5}}
-                            disabled={this.state.disabled}
-                            style={styles.button}>Join</Button>
-                        </Content>
-                    </Container>
-                </StyleProvider>
+                    />
+                    <Button onPress={() => this.submitmail()}  
+                        containerStyle={styles.butCont} 
+                        styleDisabled={{backgroundColor: '#999', opacity: 0.5}}
+                        disabled={this.state.disabled}
+                        style={styles.button}>Join</Button>
+                    </Content>
+                </Container>
+            </StyleProvider>
             
         )
     }

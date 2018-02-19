@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, AsyncStorage , StyleSheet, BackHandler, Dimensions, TouchableOpacity, Image, TextInput} from 'react-native';
+import { View, Text, AsyncStorage , ImageBackground, StyleSheet, BackHandler, Dimensions, TouchableOpacity, Image, TextInput} from 'react-native';
 import { StyleProvider, Container, Header, Left, Right, Body, Title} from 'native-base'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
@@ -12,7 +12,7 @@ import { Actions } from 'react-native-router-flux'
 
 const USER_ID = '@userId';
 
-class Chat extends React.Component {
+class Forum extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,10 +25,12 @@ class Chat extends React.Component {
     this.socket = io('https://polar-forest-71145.herokuapp.com');
     this.socket.on('connect', ()=>{
         console.log('connected to server', this.socket.connected)
-        //should be dynamic
-        this.socket.emit('register', this.state.userId);
+        // this.socket.emit('register', 'wilson@gmail.com');
     })                         
-    this.socket.on('message', this.onReceivedMessage.bind(this));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+    this.socket.on('f_message', ((message)=>{
+      console.log(message)
+    }));
+    // this.socket.on('f_message', this.formatoSaveMessage.bind(this));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
     // this.determineUser = this.determineUser.bind(this);
     
     this.onSend = this.onSend.bind(this);
@@ -41,19 +43,19 @@ class Chat extends React.Component {
     setInterval = (fn, ms = 0) => BackgroundTimer.setInterval(fn, ms)
     clearTimeout = (fn, ms = 0) => BackgroundTimer.clearTimeout(fn, ms)
     clearInterval = (fn, ms = 0) => BackgroundTimer.clearInterval(fn, ms)
+    
     // this.determineUser();
   }
   componentWillMount() {
-    console.log({UseriD: this.props.data.id})
-      axios.get(`http://api.atikuvotersapp.org/users/${this.props.data.id}`)
-      .then(response => { 
-        console.log({responseWillMount: response})
-            this.setState({
-                userId: response.data.message[0].email,
-                user1un: response.data.message[0].name
-            })
-            this.apiCall()
-            
+    axios.get(`http://api.atikuvotersapp.org/users/56`)
+    
+    .then(response => { 
+      console.log({responseWillMount: response})
+          this.setState({
+              userId: response.data.message[0].email,
+              user1un: response.data.message[0].name
+          })
+      this.dataHistory();
           
       })
       // .then(response => axios.get(`http://api.atikuvotersapp.org/conversations/${this.state.userId}`))
@@ -61,22 +63,23 @@ class Chat extends React.Component {
       
     
   }
-
-   async apiCall(){
+   dataHistory(){
      try{
-      axios.get(`http://api.atikuvotersapp.org/conversations/${this.state.userId}`)
-      .then((res)=>{
-        console.log(res.data.message)
-        this.getHistory(res.data.message)
+      axios.get(`http://api.atikuvotersapp.org/forumhistory`)
+      .then(response => { 
+        console.log({history: response})
+        this.getHistory(response.data.message)
       })
      }catch(err){
-       console.table(err)
+       console.log({
+         errorInHistory: err
+       })
      }
-    
    }
+
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
-    
+    // this.apiCall()
   }
   
   componentWillUnmount() {
@@ -96,16 +99,16 @@ class Chat extends React.Component {
   onReceivedMessage(messages) {
     console.log({messageReceived: messages})
     
-    this._storeMessages(messages);
+    // this._storeMessages(messages);
   }
   formatMessage(message){
     let obj = null
+    console.log(this.state.userId, this.state.user1un)
       message.map((message)=> {
          obj = {
            message: message.text,
           user1id: this.state.userId,
           user1un: this.state.user1un,
-          user2id: 'admin2@gmail.com',
           status: 0,
           time: ''
         } 
@@ -119,12 +122,13 @@ class Chat extends React.Component {
       let x = 1
       x++
     let obj = {
-      _id: messages.id,
+      _id: new Date()*x,
       text: messages.message,
-      createdAt: new Date(),
+      createdAt: messages.date,
       user: {
-        _id: messages.user1id,
-        avatar: messages.user1pix
+        _id: messages.sender_email,
+        name: messages.sender_name,
+        avatar: messages.sender_pix
       }
     }
     res.push(obj)
@@ -141,16 +145,23 @@ class Chat extends React.Component {
 
   formatoSaveMessage(message){
     let res = []
+    console.log({messagesToSave: message})
     let obj = {
       _id: Math.floor(Math.random() * 20),
       text: message.message,
       createdAt: new Date(),
       user: {
-        _id: message.user1id,
-        name: 'wilson'
+        _id: message.sender_email,
+        name: message.sender_name,
+        avatar: message.sender_pix
       }
     }
     res.push(obj)
+    this.setState((previousState) => {
+      return {
+        messages: GiftedChat.append(previousState.messages, obj)
+      };
+    });
     console.log({formatedtosave: res})
     return res
   }
@@ -161,22 +172,39 @@ class Chat extends React.Component {
   onSend(messages=[]) {
     console.log(messages)
     let data = this.formatMessage(messages)
-    this.socket.emit('msgadmin', data);
+    this.socket.emit('msgforum', data);
     this._storeMessages(messages);
   }
 
   renderBubble(props) { 
-    return ( <Bubble {...props} 
-    wrapperStyle={{
-        left: {
-          backgroundColor: '#dcf8c6',
-          
-        },
-        right: {
-          backgroundColor: '#26A65B'
-        }
-      }} />
-  )
+    if (props.isSameUser(props.currentMessage, props.previousMessage) && props.isSameDay(props.currentMessage, props.previousMessage)){
+      return ( <Bubble {...props} 
+      wrapperStyle={{
+          left: {
+            backgroundColor: '#dcf8c6',
+            
+          },
+          right: {
+            backgroundColor: '#26A65B'
+          }
+        }} />
+    )}else{
+      return ( 
+        <View  > 
+          <Text style={{color:'#26A65B'}}>{props.currentMessage.user.name}</Text>
+        <Bubble {...props} 
+        
+          wrapperStyle={{
+              left: {
+                backgroundColor: '#dcf8c6',
+                
+              },
+              right: {
+                backgroundColor: '#26A65B'
+              }
+            }} />
+          </View>)
+    }
 }
   
 
@@ -193,7 +221,7 @@ class Chat extends React.Component {
                     </TouchableOpacity>
                   </Left>
                   <Body>
-                    <Title style={styles.title}>CHAT WITH ATIKU</Title>
+                    <Title style={styles.title}> ATIKU</Title>
                   </Body>
                   <Right>
                     <TouchableOpacity onPress={() => Actions.pop()} style={styles.touchable} activeOpacity = {0.8}>
@@ -201,6 +229,7 @@ class Chat extends React.Component {
                     </TouchableOpacity>    
                   </Right>  
               </Header>
+              <ImageBackground style={styles.bg} source={require('../img/chatBg2.png')} >
               <GiftedChat
                 messages={this.state.messages}
                 onSend={this.onSend}
@@ -215,6 +244,7 @@ class Chat extends React.Component {
                 renderBubble={this.renderBubble.bind(this)}
                 
               />
+              </ImageBackground>
     </Container>
   </StyleProvider>
 
@@ -257,7 +287,12 @@ const styles = StyleSheet.create({
       marginLeft: '4%'
 
   },
+  bg: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
   
+  },
   topic: {
       color: '#008841',
       fontSize: (( Dimensions.get('window').height) * 0.025),
@@ -327,4 +362,4 @@ const styles = StyleSheet.create({
 
 })
 
-module.exports = Chat;
+module.exports = Forum;

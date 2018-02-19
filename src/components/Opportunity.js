@@ -6,7 +6,7 @@ import material from '../../native-base-theme/variables/material';
 import { View, Text, StyleSheet, Image, Picker, TouchableOpacity, ToastAndroid, Dimensions, BackHandler } from 'react-native'
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 import { Actions } from 'react-native-router-flux'
-// import 'url-search-params-polyfill';
+import 'url-search-params-polyfill';
 
 export default class Opportunity extends Component{
     
@@ -138,63 +138,57 @@ export default class Opportunity extends Component{
                         <Text style = {styles.info} > OPPORTUNITY CENTER </Text>
                         <View style = {styles.content}> 
                             <View style = {styles.top}> 
-                                        <View style = {styles.pickJ} >
-                                        
-                                            <Image style = {styles.Jimg1} source = {require('../img/icons-13.png')} />
-                                            
-                                            <View style = {styles.jImg}>
-                                            <Text style ={styles.text} > Jobs For Nigerians </Text>
-                                            </View>
-                                        </View>
-                                        <View style = {styles.partb} > 
-                                                <View style = {styles.cv}> 
-                                                    <Text style = {styles.cvT} > Submit Your CV</Text>
-                                                </View>
-                                            
-                                            <View style={styles.file} >
-                                                <Text style={styles.filec}> File :</Text>
-                                                <TouchableOpacity style = {styles.chooseF} onPress={this.pickFIle.bind(this)} >
-                                                    <Text style={styles.filec}> Choose File  </Text>
-                                                </TouchableOpacity>
-                                                <Text style={styles.filec}> {this.state.choosen? 'file selected': 'No file selected'} </Text>
-                                            </View>
-                                            <TouchableOpacity style={styles.submitCv} onPress={() => this.submit()}>
-                                                <Text style={styles.submitCvT}> Submit CV </Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-                                    <View style = {styles.bottom}> 
-                                        <View style = {styles.bottomA} > 
-                                            <Image style = {styles.Jimg1} source = {require('../img/icons-14.png')} />
-                                            <View>
-                                                <Text style ={styles.text} > Business Capital For Nigerians</Text>
-                                            </View>
-                                        </View>
-                                        <View style = {styles.bottomB}>
-                                            <Text style = {styles.cvT} > Submit Your CV</Text>
-                                            <View style={styles.file} >
-                                                <Text  style={styles.filec}> File : </Text>
-                                                <TouchableOpacity style = {styles.chooseF} onPress={this.pickFIle2.bind(this)} >
-                                                    <Text style={styles.filec}> Choose File  </Text>
-                                                </TouchableOpacity>
-                                                <Text style={styles.filec}>  {this.state.choosenb? 'file selected': 'No file selected'}  </Text>
-                                            </View>
-                                            <TouchableOpacity style={styles.submitCv} onPress={() => this.submit()}>
-                                                <Text style={styles.submitCvT}> Submit Idea </Text>
-                                            </TouchableOpacity>
-                                        </View>
+                                <View style = {styles.pickJ} >
+                                    <Image style = {styles.Jimg1} source = {require('../img/icons-13.png')} />
+                                    <View style = {styles.jImg}>
+                                        <Text style ={styles.text} > Jobs For Nigerians </Text>
                                     </View>
                                 </View>
-                                <AdMobBanner
-                                    style={styles.banner}
-                                    adSize="fullBanner"
-                                    adUnitID="ca-app-pub-6762059104295133/6487243342"
-                                />
+                                <View style = {styles.partb} > 
+                                    <View style = {styles.cv}> 
+                                        <Text style = {styles.cvT} > Submit Your CV</Text>
+                                    </View>
+                                    <View style={styles.file} >
+                                        <Text style={styles.filec}> File :</Text>
+                                        <TouchableOpacity style = {styles.chooseF} onPress={this.pickFIle.bind(this)} >
+                                             <Text style={styles.filec}> Choose File  </Text>
+                                        </TouchableOpacity>
+                                        <Text style={styles.filec}> {this.state.choosen? 'file selected': 'No file selected'} </Text>
+                                    </View>
+                                    <TouchableOpacity style={styles.submitCv} onPress={() => this.submit()}>
+                                        <Text style={styles.submitCvT}> Submit CV </Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-
-                    
-                            
-            </Container>
+                            <View style = {styles.bottom}> 
+                                <View style = {styles.bottomA} > 
+                                    <Image style = {styles.Jimg1} source = {require('../img/icons-14.png')} />
+                                    <View>
+                                        <Text style ={styles.text} > Business Capital For Nigerians</Text>
+                                    </View>
+                                </View>
+                                <View style = {styles.bottomB}>
+                                    <Text style = {styles.cvT} > Submit Your CV</Text>
+                                    <View style={styles.file} >
+                                        <Text  style={styles.filec}> File : </Text>
+                                        <TouchableOpacity style = {styles.chooseF} onPress={this.pickFIle2.bind(this)} >
+                                            <Text style={styles.filec}> Choose File  </Text>
+                                        </TouchableOpacity>
+                                        <Text style={styles.filec}>  {this.state.choosenb? 'file selected': 'No file selected'}  </Text>
+                                    </View>
+                                    <TouchableOpacity style={styles.submitCv} onPress={() => this.submit()}>
+                                        <Text style={styles.submitCvT}> Submit Idea </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                        <AdMobBanner
+                            style={styles.banner}
+                            adSize="fullBanner"
+                            adUnitID="ca-app-pub-6559209856638953/2803373886"
+                        />
+                    </View>             
+                </Container>
             </StyleProvider>
         )
     }

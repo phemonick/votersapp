@@ -7,7 +7,7 @@ import { Dimensions, StyleSheet, TouchableOpacity, Image, Text, View, CheckBox, 
 import { Actions } from 'react-native-router-flux'
 import Button from 'react-native-button'
 import axios from 'axios'
-
+import 'url-search-params-polyfill';
 
 class Manifest extends Component {
     constructor() {
@@ -50,7 +50,6 @@ class Manifest extends Component {
         })
     }
     submitmanifest() {
-
         var params = new URLSearchParams();
         params.append('jobs', this.state.checked);
         params.append('business', this.state.checked2);
@@ -81,7 +80,7 @@ class Manifest extends Component {
         .catch(err => ToastAndroid.show('Failed! Check internet connection', ToastAndroid.SHORT)) 
   }
     render() {
-        console.log(this.props.data.id)
+        console.log(this.props.data)
         return (
                 <StyleProvider style={getTheme(material)}>
                     <Container style={styles.container}>
@@ -138,12 +137,11 @@ class Manifest extends Component {
                                  disabled={this.state.disabled}
                                 containerStyle={styles.butCont} style={styles.button}>Submit</Button>
                             </Content>
-                            
                             </Content>
                             <AdMobBanner
                                 style={styles.banner}
                                 adSize="fullBanner"
-                                adUnitID="ca-app-pub-6762059104295133/5645122311"
+                                adUnitID="ca-app-pub-6559209856638953/2268666191"
                             />
                     </Container>
                 </StyleProvider>

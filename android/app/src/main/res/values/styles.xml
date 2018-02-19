@@ -21,5 +21,11 @@
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/mydivider</item>
     </style> -->
+    <style name="DefaultExplainingPermissionsTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- Used for the buttons -->
+        <item name="colorAccent">@color/button</item>
 
+        <!-- Used for the background -->
+        <item name="android:background">@color/dialog</item>
+    </style>
 </resources>

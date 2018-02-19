@@ -44,41 +44,41 @@ export default class Guide extends Component {
   render() {
     return (
         <StyleProvider style={getTheme(material)}>
-        <Container style={styles.container}>
-          <Header style={{ marginTop: (( Dimensions.get('window').height) * 0.024)}}>
-              <Left>
-                <TouchableOpacity onPress={() => Actions.pop()} activeOpacity = {0.8}>
-                  <Image source={require('../img/icons-03.png')} style={styles.open}/>
-                </TouchableOpacity>
-              </Left>
-              <Body>
-                <Title style={{fontSize: (( Dimensions.get('window').height) * 0.024)}}>VOTERS GUIDE</Title>
-              </Body>  
-          </Header>
-        <View>
-        <DeckSwiper
-            ref={(c) => this._deckSwiper = c}
-            dataSource={data}
-            renderEmpty={() =>
-            <View style={{ alignSelf: "center" }}>
-                <Text>Over</Text>
-            </View>
-            }
-            renderItem={item =>
-            <View style={styles.deck}> 
-                <Text style = {[styles.topic, styles.step]}> {item.step} </Text>
-                    {item.img}
-                <ScrollView>
-                    <Text style = {[styles.topic, styles.top]}>{item.topic} </Text>
-                    <Text style={styles.cont}>{item.content} </Text>
-                </ScrollView>
+            <Container style={styles.container}>
+                <Header style={{ marginTop: (( Dimensions.get('window').height) * 0.024)}}>
+                    <Left>
+                        <TouchableOpacity onPress={() => Actions.pop()} activeOpacity = {0.8}>
+                        <Image source={require('../img/icons-03.png')} style={styles.open}/>
+                        </TouchableOpacity>
+                    </Left>
+                    <Body>
+                        <Title style={{marginLeft: '5%',fontSize: (( Dimensions.get('window').height) * 0.024)}}>VOTERS GUIDE</Title>
+                    </Body>  
+                </Header>
+                <View>
+                    <DeckSwiper
+                        ref={(c) => this._deckSwiper = c}
+                        dataSource={data}
+                        renderEmpty={() =>
+                        <View style={{ alignSelf: "center" }}>
+                            <Text>Over</Text>
+                        </View>
+                        }
+                        renderItem={item =>
+                        <View style={styles.deck}> 
+                            <Text style = {[styles.topic, styles.step]}> {item.step} </Text>
+                                {item.img}
+                            <ScrollView>
+                                <Text style = {[styles.topic, styles.top]}>{item.topic} </Text>
+                                <Text style={styles.cont}>{item.content} </Text>
+                            </ScrollView>
 
-            </View>
-            }
-        />
-        </View>
-      </Container>
-    </StyleProvider>
+                        </View>
+                        }
+                    />
+                </View>
+        </Container>
+        </StyleProvider>
     );
   }
 }
