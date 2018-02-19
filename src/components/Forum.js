@@ -25,12 +25,14 @@ class Forum extends React.Component {
     this.socket = io('https://polar-forest-71145.herokuapp.com');
     this.socket.on('connect', ()=>{
         console.log('connected to server', this.socket.connected)
-        // this.socket.emit('register', 'wilson@gmail.com');
+        //should be dynamic
+        this.socket.emit('register', this.state.userId);
     })                         
-    this.socket.on('f_message', ((message)=>{
-      console.log(message)
-    }));
-    // this.socket.on('f_message', this.formatoSaveMessage.bind(this));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+    // this.socket.on('message', this.onReceivedMessage.bind(this)); 
+    // this.socket.on('f_message', ((message)=>{
+    //   console.log({onReceivedMessage: message})
+    // }));                                     
+    this.socket.on('f_message', this.formatoSaveMessage.bind(this));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
     // this.determineUser = this.determineUser.bind(this);
     
     this.onSend = this.onSend.bind(this);

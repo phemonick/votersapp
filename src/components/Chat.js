@@ -28,7 +28,10 @@ class Chat extends React.Component {
         //should be dynamic
         this.socket.emit('register', this.state.userId);
     })                         
-    this.socket.on('message', this.onReceivedMessage.bind(this));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+    this.socket.on('message', this.onReceivedMessage.bind(this)); 
+    this.socket.on('f_message', ((message)=>{
+      console.log({onReceivedMessage: message})
+    }));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
     // this.determineUser = this.determineUser.bind(this);
     
     this.onSend = this.onSend.bind(this);
