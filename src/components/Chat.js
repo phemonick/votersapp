@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, AsyncStorage , StyleSheet, BackHandler, Dimensions, TouchableOpacity, Image, TextInput} from 'react-native';
+import { View, Text, AsyncStorage , StyleSheet, BackHandler, Dimensions, TouchableOpacity, Image,ImageBackground, TextInput} from 'react-native';
 import { StyleProvider, Container, Header, Left, Right, Body, Title} from 'native-base'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
@@ -204,6 +204,7 @@ class Chat extends React.Component {
                     </TouchableOpacity>    
                   </Right>  
               </Header>
+              <ImageBackground style={styles.bg} source={require('../img/chatBg2.png')} >
               <GiftedChat
                 messages={this.state.messages}
                 onSend={this.onSend}
@@ -218,6 +219,7 @@ class Chat extends React.Component {
                 renderBubble={this.renderBubble.bind(this)}
                 
               />
+               </ImageBackground>
     </Container>
   </StyleProvider>
 
@@ -252,6 +254,12 @@ const styles = StyleSheet.create({
   chatT: {
     color: '#2C3E50',
     width: '80%'
+  },
+  bg: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  
   },
   open: {
       width:  (( Dimensions.get('window').height) * 0.025),
