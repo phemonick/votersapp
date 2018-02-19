@@ -29,10 +29,10 @@ class Forum extends React.Component {
         this.socket.emit('register', this.state.userId);
     })                         
     // this.socket.on('message', this.onReceivedMessage.bind(this)); 
-    // this.socket.on('f_message', ((message)=>{
-    //   console.log({onReceivedMessage: message})
-    // }));                                     
-    this.socket.on('f_message', this.formatoSaveMessage.bind(this));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+    this.socket.on('f_message', ((message)=>{
+      this.formatoSaveMessage(message)
+    }));                                     
+    // this.socket.on('f_message', this.formatoSaveMessage.bind(this));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
     // this.determineUser = this.determineUser.bind(this);
     
     this.onSend = this.onSend.bind(this);
