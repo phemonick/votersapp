@@ -87,21 +87,7 @@ class Forum extends React.Component {
     
     // this._storeMessages(messages);
   }
-  formatMessage(message) {
-    let obj = null;
-    console.log(this.state.userId, this.state.user1un);
-      message.map((message) => {
-         obj = {
-           message: message.text,
-          user1id: this.state.userId,
-          user1un: this.state.user1un,
-          status: 0,
-          time: ''
-        }; 
-      });
-      console.log({ formated: obj });
-      return obj;
-  }
+  
   getHistory(message) {
     const res = [];
     message.map((messages) => {
@@ -129,7 +115,7 @@ class Forum extends React.Component {
 
   dataHistory() {
     try {
-     axios.get(`http://api.atikuvotersapp.org/forumhistory/1`)
+     axios.get('http://api.atikuvotersapp.org/forumhistory/1')
      .then(response => { 
        console.log({ history: response });
        const data = response.data.message;
@@ -175,9 +161,27 @@ class Forum extends React.Component {
     this._storeMessages(messages);
   }
 
+  formatMessage(messages) {
+    let obj = null;
+    console.log(this.state.userId, this.state.user1un);
+      messages.map((message) => {
+         obj = {
+           message: message.text,
+          user1id: this.state.userId,
+          user1un: this.state.user1un,
+          status: 0,
+          time: ''
+        }; 
+      });
+      console.log({ formated: obj });
+      return obj;
+  }
+
   renderBubble(props) { 
-    if (props.isSameUser(props.currentMessage, props.previousMessage) && props.isSameDay(props.currentMessage, props.previousMessage)){
-      return ( <Bubble {...props} 
+    if (props.isSameUser(props.currentMessage, props.previousMessage)
+     && props.isSameDay(props.currentMessage, props.previousMessage)) {
+      return (<Bubble 
+        {...props} 
       wrapperStyle={{
           left: {
             backgroundColor: '#dcf8c6',
@@ -186,12 +190,15 @@ class Forum extends React.Component {
           right: {
             backgroundColor: '#26A65B'
           }
-        }} />
-    )}
+        }}
+      />
+    );
+    }
       return ( 
-        <View  > 
-          <Text style={{color:'#26A65B'}}>{props.currentMessage.user.name}</Text>
-        <Bubble {...props} 
+        <View > 
+          <Text style={{ color: '#26A65B' }}>{props.currentMessage.user.name}</Text>
+        <Bubble
+          {...props} 
         
           wrapperStyle={{
               left: {
@@ -201,21 +208,19 @@ class Forum extends React.Component {
               right: {
                 backgroundColor: '#26A65B'
               }
-            }} />
-          </View>)
-    
+            }}
+        />
+          </View>);
 }
   
 
   render() {
-    let user = { _id: this.state.userId || -1 };
-
     return (
       <StyleProvider style={getTheme(material)}>
           <Container style={styles.container}>
               <Header style={{ marginTop: ((Dimensions.get('window').height) * 0.024) }}>
                   <Left>
-                    <TouchableOpacity onPress={() => Actions.drawerOpen()} style={styles.touchable} activeOpacity= {0.8}>
+                    <TouchableOpacity onPress={() => Actions.drawerOpen()} style={styles.touchable} activeOpacity={0.8}>
                         <Image source={require('../img/icons-02.png')} style={styles.open} />
                     </TouchableOpacity>
                   </Left>
@@ -223,7 +228,7 @@ class Forum extends React.Component {
                     <Title style={styles.title}> ATIKU</Title>
                   </Body>
                   <Right>
-                    <TouchableOpacity onPress={() => Actions.pop()} style={styles.touchable} activeOpacity ={0.8}>
+                    <TouchableOpacity onPress={() => Actions.pop()} style={styles.touchable} activeOpacity={0.8}>
                         <Image source={require('../img/back.png')} style={styles.open} />
                     </TouchableOpacity>    
                   </Right>  
@@ -257,7 +262,7 @@ class Forum extends React.Component {
     this.setState((previousState) => ({
         messages: GiftedChat.append(previousState.messages, messages),
       }));
-    }else {
+    } else {
       const data = this.formatoSaveMessage(messages);
       this.setState((previousState) => ({
           messages: GiftedChat.append(previousState.messages, data),
